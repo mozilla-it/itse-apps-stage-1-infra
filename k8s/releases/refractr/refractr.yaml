@@ -1,0 +1,25 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: refractr
+  namespace: refractr
+  labels:
+    app: refractr
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: regex:^(v[0-9]+.[0-9]+.[0-9]+-[0-9]+-g[a-f0-9]{7})$
+spec:
+  releaseName: refractr
+  chart:
+    repository: https://mozilla-it.github.io/helm-charts/
+    name: refractr
+    version: "1.0.5"
+  values:
+    issuer: stage
+    environment: stage
+    refractr:
+      deployment_name: refractr
+    image:
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/refractr
+      tag: v0.0.7-4-gb1ff42b
