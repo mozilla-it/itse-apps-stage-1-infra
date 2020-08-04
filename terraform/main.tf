@@ -7,7 +7,8 @@ locals {
   }
 
   flux_settings = {
-    "git.url" = "git@github.com:mozilla-it/itse-apps-stage-1"
+    "git.url"    = "git@github.com:mozilla-it/itse-apps-stage-1-infra"
+    "git.branch" = "main"
   }
 }
 
