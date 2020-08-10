@@ -1,8 +1,9 @@
 locals {
   cluster_features = {
+    "prometheus"         = true
+    "external_secrets"   = true
     "flux"               = true
     "flux_helm_operator" = true
-    "external_secrets"   = true
     "aws_calico"         = true
   }
 
