@@ -1,15 +1,25 @@
 provider "aws" {
   region  = var.region
-  version = ">= 2.7.0"
+  version = "~> 2"
 }
 
 provider "kubernetes" {
-  alias                  = "itse-apps-stage-1"
-  version                = ">= 1.11.4"
-  host                   = data.aws_eks_cluster.eks.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.eks.token
+  version                = "~> 1"
+  host                   = data.aws_eks_cluster.itse-apps-stage-1.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.itse-apps-stage-1.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.itse-apps-stage-1.token
   load_config_file       = false
+}
+
+provider "helm" {
+  version = "~> 1"
+
+  kubernetes {
+    host                   = data.aws_eks_cluster.itse-apps-stage-1.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.itse-apps-stage-1.certificate_authority.0.data)
+    token                  = data.aws_eks_cluster_auth.itse-apps-stage-1.token
+    load_config_file       = false
+  }
 }
 
 provider "random" {
