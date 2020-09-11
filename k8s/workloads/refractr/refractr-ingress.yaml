@@ -1,0 +1,40 @@
+# This used to be in a helm chart but with every helm chart update
+# of refractr it causes it to create a new release which recreates the load balancer
+# so moving this here to mitigate that
+#
+# NOTE: Decide if we want this in terraform instead, I can see how this should be in terraform
+#       but since its part of the app it should live as a helmrelease
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nginx-ingress
+  namespace: refractr-stage
+  labels:
+    app: refractr
+spec:
+  releaseName: refractr-nginx-ingress
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com
+    name: refractr-nginx-ingress
+    version: "1.31.0"
+  values:
+    controller:
+      useIngressClassOnly: true
+      enableCustomResources: false
+      admissionWebhooks:
+        enable: false
+      scope:
+        enabled: true
+      config:
+        use-proxy-protocol: "false"
+        use-forwarded-headers: "true"
+        proxy-real-ip-cidr: "0.0.0.0/0"   # restrict this to the IP addresses of ELB
+      service:
+        annotations:
+          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      metrics:
+        enabled: true
+    rbac:
+      create: true
+      scope: true
