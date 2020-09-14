@@ -16,7 +16,7 @@ spec:
   releaseName: refractr-nginx-ingress
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com
-    name: refractr-nginx-ingress
+    name: nginx-ingress
     version: "1.31.0"
   values:
     controller:
