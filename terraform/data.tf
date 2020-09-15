@@ -3,6 +3,11 @@ data "aws_vpc" "this" {
   id = data.terraform_remote_state.vpc.outputs.vpc_id
 }
 
+data "aws_subnet" "public" {
+  for_each = toset(data.terraform_remote_state.vpc.outputs.public_subnets)
+  id       = each.value
+}
+
 data "aws_eks_cluster" "itse-apps-stage-1" {
   name = module.itse-apps-stage-1.cluster_id
 }
