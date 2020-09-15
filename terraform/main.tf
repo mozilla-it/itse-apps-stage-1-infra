@@ -25,3 +25,7 @@ module "itse-apps-stage-1" {
   external_secrets_secret_paths = ["/stage/*"]
   admin_users_arn               = ["arn:aws:iam::783633885093:role/maws-admin", "arn:aws:iam::517826968395:role/itsre-admin"]
 }
+
+resource "aws_eip" "refractr_eip" {
+  vpc = true
+}
