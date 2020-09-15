@@ -12,6 +12,9 @@ locals {
     "git.branch"       = "main"
     "git.pollInterval" = "1m"
   }
+
+  subnet_az = [for s in data.aws_subnet.public : s.availability_zone]
+  subnet_id = [for s in data.aws_subnet.public : s.id]
 }
 
 module "itse-apps-stage-1" {
@@ -27,5 +30,14 @@ module "itse-apps-stage-1" {
 }
 
 resource "aws_eip" "refractr_eip" {
-  vpc = true
+  count = length(local.subnet_az)
+  vpc   = true
+
+  tags = {
+    Name        = "RefractrEIP-${local.subnet_az[count.index]}"
+    SubnetId    = local.subnet_id[count.index]
+    App         = "refractr"
+    Environment = "stage"
+    Terraform   = "true"
+  }
 }

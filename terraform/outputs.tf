@@ -10,5 +10,5 @@ output "cluster_name" {
 }
 
 output "refractr_eip_allocation_id" {
-  value = aws_eip.refractr_eip.id
+  value = aws_eip.refractr_eip.*.id
 }
