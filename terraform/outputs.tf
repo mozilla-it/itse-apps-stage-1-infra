@@ -12,3 +12,7 @@ output "cluster_name" {
 output "refractr_eip_allocation_id" {
   value = aws_eip.refractr_eip.*.id
 }
+
+output "refractr_ips" {
+  value = aws_eip.refractr_eip.*.public_ip
+}
