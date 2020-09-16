@@ -34,7 +34,7 @@ resource "aws_eip" "refractr_eip" {
   vpc   = true
 
   tags = {
-    Name        = "RefractrEIP-${local.subnet_az[count.index]}"
+    Name        = "refractr-stage-${local.subnet_az[count.index]}"
     SubnetId    = local.subnet_id[count.index]
     App         = "refractr"
     Environment = "stage"
