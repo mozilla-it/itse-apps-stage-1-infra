@@ -7,6 +7,7 @@ locals {
     "policy"                                                    = "upsert-only"
     "replicas"                                                  = "1"
     "metrics.enabled"                                           = "true"
+    "txtOwnerId"                                                = "${module.itse-apps-stage-1.cluster_id}-${random_string.string.result}"
     "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.external_dns_role.this_iam_role_arn
   }
 
@@ -36,6 +37,14 @@ data "aws_iam_policy_document" "external_dns" {
     resources = [
       "*"
     ]
+  }
+}
+
+resource "random_string" "string" {
+  length  = 8
+  special = false
+  keepers = {
+    cluster_id = module.itse-apps-stage-1.cluster_id
   }
 }
 
