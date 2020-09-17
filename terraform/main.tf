@@ -13,20 +13,24 @@ locals {
     "git.pollInterval" = "1m"
   }
 
+  external_secrets_settings = {
+    secrets_path = "/stage/*"
+  }
+
   subnet_az = [for s in data.aws_subnet.public : s.availability_zone]
   subnet_id = [for s in data.aws_subnet.public : s.id]
 }
 
 module "itse-apps-stage-1" {
-  source                        = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
-  cluster_name                  = "itse-apps-stage-1"
-  cluster_version               = "1.17"
-  vpc_id                        = data.terraform_remote_state.vpc.outputs.vpc_id
-  cluster_subnets               = data.terraform_remote_state.vpc.outputs.public_subnets
-  cluster_features              = local.cluster_features
-  flux_settings                 = local.flux_settings
-  external_secrets_secret_paths = ["/stage/*"]
-  admin_users_arn               = ["arn:aws:iam::783633885093:role/maws-admin", "arn:aws:iam::517826968395:role/itsre-admin"]
+  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
+  cluster_name              = "itse-apps-stage-1"
+  cluster_version           = "1.17"
+  vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
+  cluster_subnets           = data.terraform_remote_state.vpc.outputs.public_subnets
+  cluster_features          = local.cluster_features
+  flux_settings             = local.flux_settings
+  external_secrets_settings = local.external_secrets_settings
+  admin_users_arn           = ["arn:aws:iam::783633885093:role/maws-admin", "arn:aws:iam::517826968395:role/itsre-admin"]
 }
 
 resource "aws_eip" "refractr_eip" {
