@@ -4,11 +4,15 @@ locals {
 
   external_dns_chart_settings = {
     "provider"                                                  = "aws"
-    "policy"                                                    = "upsert-only"
+    "policy"                                                    = "sync"
     "replicas"                                                  = "1"
     "metrics.enabled"                                           = "true"
     "txtOwnerId"                                                = "${module.itse-apps-stage-1.cluster_id}-${random_string.string.result}"
     "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.external_dns_role.this_iam_role_arn
+    # NOTE: The default option for this is actually ['service', 'ingress'] where external-dns
+    # crates DNS Records based on the hosts specified in the ingress object. This is less than ideal
+    # so we just configure it to check the service annotation instead
+    "sources[0]" = "service"
   }
 
   external_dns_tags = {
