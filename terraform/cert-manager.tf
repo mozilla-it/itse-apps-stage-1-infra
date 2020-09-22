@@ -1,5 +1,5 @@
 locals {
-  cert_manager_version      = "v1.0.1"
+  cert_manager_version      = "v1.0.2"
   cert_manager_crd_manifest = "https://github.com/jetstack/cert-manager/releases/download/${local.cert_manager_version}/cert-manager.crds.yaml"
 }
 
