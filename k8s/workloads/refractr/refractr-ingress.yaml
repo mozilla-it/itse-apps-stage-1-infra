@@ -22,6 +22,11 @@ spec:
     controller:
       useIngressClassOnly: true
       enableCustomResources: false
+      autoscaling:
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 4
+        targetCPUUtilizationPercentage: 80
       admissionWebhooks:
         enable: false
       scope:
