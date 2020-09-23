@@ -44,6 +44,7 @@ spec:
         use-forwarded-headers: "true"
         proxy-real-ip-cidr: "0.0.0.0/0"   # restrict this to the IP addresses of ELB
       service:
+        externalTrafficPolicy: "Local"
         annotations:
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
           service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
