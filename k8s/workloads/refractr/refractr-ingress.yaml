@@ -56,6 +56,10 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: "stage.mozilla-redirects.xyz,stage.refractr.mozit.cloud"
       metrics:
         enabled: true
+        service:
+          annotations:
+            prometheus.io/scrape: "true"
+            prometheus.io/port: "10254"
     rbac:
       create: true
       scope: true

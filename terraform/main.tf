@@ -5,6 +5,7 @@ locals {
     "flux"               = true
     "flux_helm_operator" = true
     "aws_calico"         = true
+    "prometheus"         = true
   }
 
   flux_settings = {
