@@ -1,0 +1,613 @@
+# This used to be in a helm chart but with every helm chart update
+# of refractr it causes it to create a new release which recreates the load balancer
+# so moving this here to mitigate that
+#
+# NOTE: Decide if we want this in terraform instead, I can see how this should be in terraform
+#       but since its part of the app it should live as a helmrelease
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+  labels:
+    app: grafana
+spec:
+  releaseName: grafana
+  chart:
+    repository: https://grafana.github.io/helm-charts
+    name: grafana
+    version: "5.7.2"
+  values:
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-server.monitoring
+            access: proxy
+            isDefault: true
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    dashboards:
+      default:
+        refractr:
+          json: |
+            {
+              "annotations": {
+                "list": [
+                  {
+                    "builtIn": 1,
+                    "datasource": "-- Grafana --",
+                    "enable": true,
+                    "hide": true,
+                    "iconColor": "rgba(0, 211, 255, 1)",
+                    "name": "Annotations & Alerts",
+                    "type": "dashboard"
+                  }
+                ]
+              },
+              "description": "A quick dashboard to show how refractr is being used",
+              "editable": true,
+              "gnetId": null,
+              "graphTooltip": 0,
+              "iteration": 1602178276904,
+              "links": [],
+              "panels": [
+                {
+                  "aliasColors": {},
+                  "bars": false,
+                  "dashLength": 10,
+                  "dashes": false,
+                  "datasource": null,
+                  "fieldConfig": {
+                    "defaults": {
+                      "custom": {}
+                    },
+                    "overrides": []
+                  },
+                  "fill": 1,
+                  "fillGradient": 0,
+                  "gridPos": {
+                    "h": 9,
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                  },
+                  "hiddenSeries": false,
+                  "id": 8,
+                  "legend": {
+                    "avg": false,
+                    "current": false,
+                    "max": false,
+                    "min": false,
+                    "show": true,
+                    "total": false,
+                    "values": false
+                  },
+                  "lines": true,
+                  "linewidth": 1,
+                  "nullPointMode": "null",
+                  "options": {
+                    "alertThreshold": true
+                  },
+                  "percentage": false,
+                  "pluginVersion": "7.2.0",
+                  "pointradius": 2,
+                  "points": false,
+                  "renderer": "flot",
+                  "seriesOverrides": [],
+                  "spaceLength": 10,
+                  "stack": false,
+                  "steppedLine": false,
+                  "targets": [
+                    {
+                      "expr": "sum(nginx_ingress_controller_request_size_count{host=\"$host\"}) by (host, path)\n",
+                      "interval": "",
+                      "legendFormat": "{{host}}, {{path}}",
+                      "refId": "A"
+                    }
+                  ],
+                  "thresholds": [],
+                  "timeFrom": null,
+                  "timeRegions": [],
+                  "timeShift": null,
+                  "title": "Requests per path, filtered by host",
+                  "tooltip": {
+                    "shared": true,
+                    "sort": 0,
+                    "value_type": "individual"
+                  },
+                  "type": "graph",
+                  "xaxis": {
+                    "buckets": null,
+                    "mode": "time",
+                    "name": null,
+                    "show": true,
+                    "values": []
+                  },
+                  "yaxes": [
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    },
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    }
+                  ],
+                  "yaxis": {
+                    "align": false,
+                    "alignLevel": null
+                  }
+                },
+                {
+                  "aliasColors": {},
+                  "bars": false,
+                  "dashLength": 10,
+                  "dashes": false,
+                  "datasource": null,
+                  "fieldConfig": {
+                    "defaults": {
+                      "custom": {}
+                    },
+                    "overrides": []
+                  },
+                  "fill": 1,
+                  "fillGradient": 0,
+                  "gridPos": {
+                    "h": 9,
+                    "w": 12,
+                    "x": 0,
+                    "y": 9
+                  },
+                  "hiddenSeries": false,
+                  "id": 7,
+                  "legend": {
+                    "avg": false,
+                    "current": false,
+                    "max": false,
+                    "min": false,
+                    "show": true,
+                    "total": false,
+                    "values": false
+                  },
+                  "lines": true,
+                  "linewidth": 1,
+                  "nullPointMode": "null",
+                  "options": {
+                    "alertThreshold": true
+                  },
+                  "percentage": false,
+                  "pluginVersion": "7.2.0",
+                  "pointradius": 2,
+                  "points": false,
+                  "renderer": "flot",
+                  "seriesOverrides": [],
+                  "spaceLength": 10,
+                  "stack": false,
+                  "steppedLine": false,
+                  "targets": [
+                    {
+                      "expr": "sum(nginx_ingress_controller_request_size_count) by (host)\n",
+                      "interval": "",
+                      "legendFormat": "{{host}}, {{path}}",
+                      "refId": "A"
+                    }
+                  ],
+                  "thresholds": [],
+                  "timeFrom": null,
+                  "timeRegions": [],
+                  "timeShift": null,
+                  "title": "Requests by host ignoring path",
+                  "tooltip": {
+                    "shared": true,
+                    "sort": 0,
+                    "value_type": "individual"
+                  },
+                  "type": "graph",
+                  "xaxis": {
+                    "buckets": null,
+                    "mode": "time",
+                    "name": null,
+                    "show": true,
+                    "values": []
+                  },
+                  "yaxes": [
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    },
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    }
+                  ],
+                  "yaxis": {
+                    "align": false,
+                    "alignLevel": null
+                  }
+                },
+                {
+                  "aliasColors": {},
+                  "bars": false,
+                  "dashLength": 10,
+                  "dashes": false,
+                  "datasource": null,
+                  "fieldConfig": {
+                    "defaults": {
+                      "custom": {}
+                    },
+                    "overrides": []
+                  },
+                  "fill": 1,
+                  "fillGradient": 0,
+                  "gridPos": {
+                    "h": 9,
+                    "w": 12,
+                    "x": 0,
+                    "y": 18
+                  },
+                  "hiddenSeries": false,
+                  "id": 2,
+                  "legend": {
+                    "avg": false,
+                    "current": false,
+                    "max": false,
+                    "min": false,
+                    "show": true,
+                    "total": false,
+                    "values": false
+                  },
+                  "lines": true,
+                  "linewidth": 1,
+                  "nullPointMode": "null",
+                  "options": {
+                    "alertThreshold": true
+                  },
+                  "percentage": false,
+                  "pluginVersion": "7.2.0",
+                  "pointradius": 2,
+                  "points": false,
+                  "renderer": "flot",
+                  "seriesOverrides": [],
+                  "spaceLength": 10,
+                  "stack": false,
+                  "steppedLine": false,
+                  "targets": [
+                    {
+                      "expr": "sum(nginx_ingress_controller_request_size_count) by (host, path)\n",
+                      "interval": "",
+                      "legendFormat": "{{host}}, {{path}}",
+                      "refId": "A"
+                    }
+                  ],
+                  "thresholds": [],
+                  "timeFrom": null,
+                  "timeRegions": [],
+                  "timeShift": null,
+                  "title": "Requests by host per path",
+                  "tooltip": {
+                    "shared": true,
+                    "sort": 0,
+                    "value_type": "individual"
+                  },
+                  "type": "graph",
+                  "xaxis": {
+                    "buckets": null,
+                    "mode": "time",
+                    "name": null,
+                    "show": true,
+                    "values": []
+                  },
+                  "yaxes": [
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    },
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    }
+                  ],
+                  "yaxis": {
+                    "align": false,
+                    "alignLevel": null
+                  }
+                },
+                {
+                  "aliasColors": {},
+                  "bars": false,
+                  "dashLength": 10,
+                  "dashes": false,
+                  "datasource": null,
+                  "fieldConfig": {
+                    "defaults": {
+                      "custom": {}
+                    },
+                    "overrides": []
+                  },
+                  "fill": 1,
+                  "fillGradient": 0,
+                  "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 27
+                  },
+                  "hiddenSeries": false,
+                  "id": 4,
+                  "legend": {
+                    "avg": false,
+                    "current": false,
+                    "max": false,
+                    "min": false,
+                    "show": true,
+                    "total": false,
+                    "values": false
+                  },
+                  "lines": true,
+                  "linewidth": 1,
+                  "nullPointMode": "null",
+                  "options": {
+                    "alertThreshold": true
+                  },
+                  "percentage": false,
+                  "pluginVersion": "7.2.0",
+                  "pointradius": 2,
+                  "points": false,
+                  "renderer": "flot",
+                  "seriesOverrides": [],
+                  "spaceLength": 10,
+                  "stack": false,
+                  "steppedLine": false,
+                  "targets": [
+                    {
+                      "expr": "topk(3, sum by (host, path) (nginx_ingress_controller_request_size_count))",
+                      "interval": "",
+                      "legendFormat": "{{host}}, {{path}}",
+                      "refId": "A"
+                    }
+                  ],
+                  "thresholds": [],
+                  "timeFrom": null,
+                  "timeRegions": [],
+                  "timeShift": null,
+                  "title": "Top 3 hosts + paths",
+                  "tooltip": {
+                    "shared": true,
+                    "sort": 0,
+                    "value_type": "individual"
+                  },
+                  "type": "graph",
+                  "xaxis": {
+                    "buckets": null,
+                    "mode": "time",
+                    "name": null,
+                    "show": true,
+                    "values": []
+                  },
+                  "yaxes": [
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    },
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    }
+                  ],
+                  "yaxis": {
+                    "align": false,
+                    "alignLevel": null
+                  }
+                },
+                {
+                  "aliasColors": {},
+                  "bars": false,
+                  "dashLength": 10,
+                  "dashes": false,
+                  "datasource": null,
+                  "fieldConfig": {
+                    "defaults": {
+                      "custom": {}
+                    },
+                    "overrides": []
+                  },
+                  "fill": 1,
+                  "fillGradient": 0,
+                  "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 35
+                  },
+                  "hiddenSeries": false,
+                  "id": 6,
+                  "legend": {
+                    "avg": false,
+                    "current": false,
+                    "max": false,
+                    "min": false,
+                    "show": true,
+                    "total": false,
+                    "values": false
+                  },
+                  "lines": true,
+                  "linewidth": 1,
+                  "nullPointMode": "null",
+                  "options": {
+                    "alertThreshold": true
+                  },
+                  "percentage": false,
+                  "pluginVersion": "7.2.0",
+                  "pointradius": 2,
+                  "points": false,
+                  "renderer": "flot",
+                  "seriesOverrides": [],
+                  "spaceLength": 10,
+                  "stack": false,
+                  "steppedLine": false,
+                  "targets": [
+                    {
+                      "expr": "bottomk(3, sum by (host, path) (nginx_ingress_controller_request_size_count))",
+                      "interval": "",
+                      "legendFormat": "{{host}}, {{path}}",
+                      "refId": "A"
+                    }
+                  ],
+                  "thresholds": [],
+                  "timeFrom": null,
+                  "timeRegions": [],
+                  "timeShift": null,
+                  "title": "Bottom 3 hosts + paths",
+                  "tooltip": {
+                    "shared": true,
+                    "sort": 0,
+                    "value_type": "individual"
+                  },
+                  "type": "graph",
+                  "xaxis": {
+                    "buckets": null,
+                    "mode": "time",
+                    "name": null,
+                    "show": true,
+                    "values": []
+                  },
+                  "yaxes": [
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    },
+                    {
+                      "format": "short",
+                      "label": null,
+                      "logBase": 1,
+                      "max": null,
+                      "min": null,
+                      "show": true
+                    }
+                  ],
+                  "yaxis": {
+                    "align": false,
+                    "alignLevel": null
+                  }
+                }
+              ],
+              "refresh": false,
+              "schemaVersion": 26,
+              "style": "dark",
+              "tags": [],
+              "templating": {
+                "list": [
+                  {
+                    "allValue": null,
+                    "current": {
+                      "selected": true,
+                      "text": "refractr.allizom.org",
+                      "value": "refractr.allizom.org"
+                    },
+                    "datasource": "Prometheus",
+                    "definition": "label_values(nginx_ingress_controller_request_size_count, host)",
+                    "hide": 0,
+                    "includeAll": false,
+                    "label": null,
+                    "multi": false,
+                    "name": "host",
+                    "options": [
+                      {
+                        "selected": false,
+                        "text": "_",
+                        "value": "_"
+                      },
+                      {
+                        "selected": true,
+                        "text": "refractr.allizom.org",
+                        "value": "refractr.allizom.org"
+                      },
+                      {
+                        "selected": false,
+                        "text": "refractr1.allizom.org",
+                        "value": "refractr1.allizom.org"
+                      },
+                      {
+                        "selected": false,
+                        "text": "stage.mozilla-redirects.xyz",
+                        "value": "stage.mozilla-redirects.xyz"
+                      },
+                      {
+                        "selected": false,
+                        "text": "stage.refractr.mozit.cloud",
+                        "value": "stage.refractr.mozit.cloud"
+                      }
+                    ],
+                    "query": "label_values(nginx_ingress_controller_request_size_count, host)",
+                    "refresh": 0,
+                    "regex": "",
+                    "skipUrlSync": false,
+                    "sort": 0,
+                    "tagValuesQuery": "",
+                    "tags": [],
+                    "tagsQuery": "",
+                    "type": "query",
+                    "useTags": false
+                  }
+                ]
+              },
+              "time": {
+                "from": "2020-10-08T16:05:48.307Z",
+                "to": "2020-10-08T18:05:48.309Z"
+              },
+              "timepicker": {},
+              "timezone": "utc",
+              "title": "Refractr Usage",
+              "uid": "TLoIA75Mz",
+              "version": 1
+            }
