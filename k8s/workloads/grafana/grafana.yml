@@ -62,7 +62,7 @@ spec:
               "editable": true,
               "gnetId": null,
               "graphTooltip": 0,
-              "iteration": 1602178276904,
+              "iteration": 1602184753465,
               "links": [],
               "panels": [
                 {
@@ -168,7 +168,21 @@ spec:
                   "datasource": null,
                   "fieldConfig": {
                     "defaults": {
-                      "custom": {}
+                      "custom": {},
+                      "mappings": [],
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": null
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
+                      }
                     },
                     "overrides": []
                   },
@@ -208,8 +222,10 @@ spec:
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "sum(nginx_ingress_controller_request_size_count) by (host)\n",
+                      "expr": "sum(nginx_ingress_controller_request_size_count) by (host) - sum(nginx_ingress_controller_request_size_count offset $__range) by (host)\n",
+                      "instant": false,
                       "interval": "",
+                      "intervalFactor": 1,
                       "legendFormat": "{{host}}, {{path}}",
                       "refId": "A"
                     }
@@ -234,14 +250,16 @@ spec:
                   },
                   "yaxes": [
                     {
+                      "$$hashKey": "object:73",
                       "format": "short",
                       "label": null,
-                      "logBase": 1,
+                      "logBase": 10,
                       "max": null,
                       "min": null,
                       "show": true
                     },
                     {
+                      "$$hashKey": "object:74",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -303,7 +321,7 @@ spec:
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "sum(nginx_ingress_controller_request_size_count) by (host, path)\n",
+                      "expr": "sum(nginx_ingress_controller_request_size_count) by (host,path) - sum(nginx_ingress_controller_request_size_count offset $__range) by (host,path)\n",
                       "interval": "",
                       "legendFormat": "{{host}}, {{path}}",
                       "refId": "A"
@@ -329,6 +347,7 @@ spec:
                   },
                   "yaxes": [
                     {
+                      "$$hashKey": "object:184",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -337,6 +356,7 @@ spec:
                       "show": true
                     },
                     {
+                      "$$hashKey": "object:185",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -398,7 +418,7 @@ spec:
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "topk(3, sum by (host, path) (nginx_ingress_controller_request_size_count))",
+                      "expr": "topk(3, sum by (host, path) (nginx_ingress_controller_request_size_count)) - sum by (host,path) (nginx_ingress_controller_request_size_count offset $__range)",
                       "interval": "",
                       "legendFormat": "{{host}}, {{path}}",
                       "refId": "A"
@@ -424,6 +444,7 @@ spec:
                   },
                   "yaxes": [
                     {
+                      "$$hashKey": "object:246",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -432,6 +453,7 @@ spec:
                       "show": true
                     },
                     {
+                      "$$hashKey": "object:247",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -493,7 +515,7 @@ spec:
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "bottomk(3, sum by (host, path) (nginx_ingress_controller_request_size_count))",
+                      "expr": "bottomk(5, sum by (host, path) (nginx_ingress_controller_request_size_count)) - sum by (host,path) (nginx_ingress_controller_request_size_count offset $__range)",
                       "interval": "",
                       "legendFormat": "{{host}}, {{path}}",
                       "refId": "A"
@@ -503,7 +525,7 @@ spec:
                   "timeFrom": null,
                   "timeRegions": [],
                   "timeShift": null,
-                  "title": "Bottom 3 hosts + paths",
+                  "title": "Bottom 5 hosts + paths",
                   "tooltip": {
                     "shared": true,
                     "sort": 0,
@@ -519,6 +541,7 @@ spec:
                   },
                   "yaxes": [
                     {
+                      "$$hashKey": "object:403",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -527,6 +550,7 @@ spec:
                       "show": true
                     },
                     {
+                      "$$hashKey": "object:404",
                       "format": "short",
                       "label": null,
                       "logBase": 1,
@@ -550,9 +574,9 @@ spec:
                   {
                     "allValue": null,
                     "current": {
-                      "selected": true,
-                      "text": "refractr.allizom.org",
-                      "value": "refractr.allizom.org"
+                      "selected": false,
+                      "text": "input.mozilla.org",
+                      "value": "input.mozilla.org"
                     },
                     "datasource": "Prometheus",
                     "definition": "label_values(nginx_ingress_controller_request_size_count, host)",
@@ -568,7 +592,7 @@ spec:
                         "value": "_"
                       },
                       {
-                        "selected": true,
+                        "selected": false,
                         "text": "refractr.allizom.org",
                         "value": "refractr.allizom.org"
                       },
@@ -602,8 +626,8 @@ spec:
                 ]
               },
               "time": {
-                "from": "2020-10-08T16:05:48.307Z",
-                "to": "2020-10-08T18:05:48.309Z"
+                "from": "now-1h",
+                "to": "now"
               },
               "timepicker": {},
               "timezone": "utc",
