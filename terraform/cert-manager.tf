@@ -1,6 +1,13 @@
 locals {
   cert_manager_version      = "v1.0.2"
   cert_manager_crd_manifest = "https://github.com/jetstack/cert-manager/releases/download/${local.cert_manager_version}/cert-manager.crds.yaml"
+  cert_manager_name_prefix  = "${module.itse-apps-stage-1.cluster_id}-cert-manager"
+  cert_manager_namespace    = "cert-manager"
+
+  cert_manager_tags = {
+    Environment = "stage"
+    Terraform   = "true"
+  }
 }
 
 resource "kubernetes_namespace" "cert_manager" {
@@ -11,6 +18,61 @@ resource "kubernetes_namespace" "cert_manager" {
       app = "cert-manager"
     }
   }
+}
+
+data "aws_route53_zone" "this" {
+  name = "refractr.mozit.cloud"
+}
+
+data "aws_iam_policy_document" "cert_manager" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "route53:ChangeResourceRecordSets",
+      "route53:ListResourceRecordSets"
+    ]
+    resources = [
+      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.this.id}"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "route53:ListHostedZonesByName",
+    ]
+    resources = [
+      "*"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "route53:GetChange",
+    ]
+    resources = [
+      "arn:aws:route53:::change/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "cert_manager" {
+  name_prefix = "${local.cert_manager_name_prefix}-policy-"
+  path        = "/"
+  description = "IAM Policy for cert-manager on ${module.itse-apps-stage-1.cluster_id}"
+  policy      = data.aws_iam_policy_document.cert_manager.json
+}
+
+module "cert_manager_role" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "~> v2.20.0"
+  create_role                   = true
+  role_name                     = "${local.cert_manager_name_prefix}-role"
+  provider_url                  = replace(module.itse-apps-stage-1.cluster_oidc_issuer_url, "https://", "")
+  role_policy_arns              = [aws_iam_policy.cert_manager.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:${local.cert_manager_namespace}:cert-manager"]
+  tags                          = merge({ Name = "${local.cert_manager_name_prefix}-role" }, local.cert_manager_tags)
 }
 
 # CRDs have to be installed differently, there is a drama about it in the community.
@@ -50,4 +112,8 @@ resource "helm_release" "cert_manager" {
   chart      = "cert-manager"
   namespace  = "cert-manager"
   version    = local.cert_manager_version
+  set {
+    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+    value = module.cert_manager_role.this_iam_role_arn
+  }
 }
