@@ -23,7 +23,7 @@ spec:
       name: stage
       dns:
         dnsNames:
-        - '*.malware-error.allizom.com'
+        - '*.malware-error.allizom.org'
         hostedZoneID: Z06469063HC60S7SHF706
     environment: stage
     refractr:
