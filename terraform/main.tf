@@ -20,6 +20,17 @@ locals {
 
   subnet_az = [for s in data.aws_subnet.public : s.availability_zone]
   subnet_id = [for s in data.aws_subnet.public : s.id]
+
+  node_groups = {
+    default_node_group = {
+      desired_capacity = 3,
+      min_capacity     = 3,
+      max_capacity     = 10,
+      instance_type    = "t3.large",
+      disk_size        = 100,
+      subnets          = data.terraform_remote_state.vpc.outputs.public_subnets
+    }
+  }
 }
 
 module "itse-apps-stage-1" {
@@ -29,6 +40,7 @@ module "itse-apps-stage-1" {
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
   cluster_subnets           = data.terraform_remote_state.vpc.outputs.public_subnets
   cluster_features          = local.cluster_features
+  node_groups               = local.node_groups
   flux_settings             = local.flux_settings
   external_secrets_settings = local.external_secrets_settings
   admin_users_arn           = ["arn:aws:iam::783633885093:role/maws-admin", "arn:aws:iam::517826968395:role/itsre-admin"]
