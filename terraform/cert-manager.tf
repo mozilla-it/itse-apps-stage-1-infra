@@ -8,6 +8,12 @@ locals {
     Environment = "stage"
     Terraform   = "true"
   }
+
+  cert_manager_settings = {
+    "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.cert_manager_role.this_iam_role_arn
+    "extraArgs[0]"                                              = "--issuer-ambient-credentials"
+    "securityContext.fsGroup"                                   = "1001"
+  }
 }
 
 resource "kubernetes_namespace" "cert_manager" {
@@ -112,8 +118,14 @@ resource "helm_release" "cert_manager" {
   chart      = "cert-manager"
   namespace  = "cert-manager"
   version    = local.cert_manager_version
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.cert_manager_role.this_iam_role_arn
+
+  dynamic "set" {
+    iterator = item
+    for_each = local.cert_manager_settings
+
+    content {
+      name  = item.key
+      value = item.value
+    }
   }
 }
