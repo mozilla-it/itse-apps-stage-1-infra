@@ -43,6 +43,10 @@ spec:
         use-proxy-protocol: "false"
         use-forwarded-headers: "true"
         proxy-real-ip-cidr: "0.0.0.0/0"   # restrict this to the IP addresses of ELB
+        hsts: true
+        hsts-include-subdomains: true
+        hsts-max-age: 31536000
+        hsts-preload: false
       service:
         externalTrafficPolicy: "Local"
         annotations:
