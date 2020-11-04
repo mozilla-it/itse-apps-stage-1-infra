@@ -36,7 +36,7 @@ locals {
 module "itse-apps-stage-1" {
   source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
   cluster_name              = "itse-apps-stage-1"
-  cluster_version           = "1.17"
+  cluster_version           = "1.18"
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
   cluster_subnets           = data.terraform_remote_state.vpc.outputs.public_subnets
   cluster_features          = local.cluster_features
