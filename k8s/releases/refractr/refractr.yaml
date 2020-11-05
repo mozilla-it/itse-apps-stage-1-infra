@@ -31,4 +31,4 @@ spec:
       deployment_name: refractr
     image:
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/refractr
-      tag: v0.0.49-1-g07c7a45
+      tag: v0.0.50-1-ga348f1b
