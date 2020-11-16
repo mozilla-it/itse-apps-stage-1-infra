@@ -46,8 +46,8 @@ spec:
         proxy-real-ip-cidr: "0.0.0.0/0"
         # explicitly set HSTS values to what mozilla.{com,org} had in the Datacenter
         hsts: "true"
-        hsts-include-subdomains: "true"
-        hsts-max-age: "31536000"
+        hsts-include-subdomains: "false"
+        hsts-max-age: "0"
         hsts-preload: "false"
       service:
         externalTrafficPolicy: "Local"
