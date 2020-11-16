@@ -44,11 +44,8 @@ spec:
         use-forwarded-headers: "true"
         # restrict this to the IP addresses of ELB
         proxy-real-ip-cidr: "0.0.0.0/0"
-        # explicitly set HSTS values to what mozilla.{com,org} had in the Datacenter
-        hsts: "true"
-        hsts-include-subdomains: "false"
-        hsts-max-age: "0"
-        hsts-preload: "false"
+        # HSTS disable here, to be picked up by refractr during redirect
+        hsts: "false"
       service:
         externalTrafficPolicy: "Local"
         annotations:
