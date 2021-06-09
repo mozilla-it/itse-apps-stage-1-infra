@@ -23,10 +23,11 @@ locals {
 
   node_groups = {
     default_node_group = {
+      name             = "itse-apps-stage-1-default_node_group-fluent-tahr"
       desired_capacity = 3,
       min_capacity     = 3,
       max_capacity     = 10,
-      instance_type    = "t3.large",
+      instance_types   = ["t3.large"],
       disk_size        = 100,
       subnets          = data.terraform_remote_state.vpc.outputs.public_subnets
     }
@@ -34,7 +35,7 @@ locals {
 }
 
 module "itse-apps-stage-1" {
-  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
+  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=d9a7662d464cd395d87fbc26a0682a50c4fb208f"
   cluster_name              = "itse-apps-stage-1"
   cluster_version           = "1.18"
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
