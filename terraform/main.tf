@@ -23,7 +23,11 @@ locals {
 
   node_groups = {
     default_node_group = {
-      name             = "itse-apps-stage-1-default_node_group-fluent-tahr"
+      # name explicitly specified only to handle upstream EKS changes: 
+      # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/upgrades.md#upgrade-module-to-v1700-for-managed-node-groups
+      # should probably remove name & use name_prefix next time nodegroup is upgraded:
+      # https://github.com/terraform-aws-modules/terraform-aws-eks/tree/master/modules/node_groups#node_groups-and-node_groups_defaults-keys
+      name             = "itse-apps-stage-1-default_node_group-fluent-tahr",
       desired_capacity = 3,
       min_capacity     = 3,
       max_capacity     = 10,
@@ -35,7 +39,7 @@ locals {
 }
 
 module "itse-apps-stage-1" {
-  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=d9a7662d464cd395d87fbc26a0682a50c4fb208f"
+  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
   cluster_name              = "itse-apps-stage-1"
   cluster_version           = "1.18"
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
