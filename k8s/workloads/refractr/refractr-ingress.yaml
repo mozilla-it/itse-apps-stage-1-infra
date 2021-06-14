@@ -6,9 +6,6 @@ metadata:
   namespace: refractr-stage
   labels:
     app: refractr
-  annotations:
-    fluxcd.io/locked: 'true'
-    fluxcd.io/locked_user: Christina Harlow <cmharlow@gmail.com>
 spec:
   releaseName: refractr-ingress-nginx
   chart:
