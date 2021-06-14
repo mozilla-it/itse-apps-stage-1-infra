@@ -22,12 +22,7 @@ locals {
   subnet_id = [for s in data.aws_subnet.public : s.id]
 
   node_groups = {
-    default_node_group = {
-      # name explicitly specified only to handle upstream EKS changes: 
-      # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/upgrades.md#upgrade-module-to-v1700-for-managed-node-groups
-      # should probably remove name & use name_prefix next time nodegroup is upgraded:
-      # https://github.com/terraform-aws-modules/terraform-aws-eks/tree/master/modules/node_groups#node_groups-and-node_groups_defaults-keys
-      name             = "itse-apps-stage-1-default_node_group-fluent-tahr",
+    green_node_group = {
       desired_capacity = 3,
       min_capacity     = 3,
       max_capacity     = 10,
