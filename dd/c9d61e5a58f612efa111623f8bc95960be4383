@@ -1,0 +1,1 @@
+{"jobID":"1ac121e8-acce-4ba0-e4eb-4ffec2d43f61","spec":{"type":"policy","cause":{"Message":"","User":"Christina Harlow \u003ccmharlow@gmail.com\u003e"},"spec":{"refractr-stage:helmrelease/ingress-nginx":{"add":{},"remove":{"locked":"true","locked_msg":"true","locked_user":"true"}}}},"result":null}
