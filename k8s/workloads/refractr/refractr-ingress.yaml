@@ -1,9 +1,3 @@
-# This used to be in a helm chart but with every helm chart update
-# of refractr it causes it to create a new release which recreates the load balancer
-# so moving this here to mitigate that
-#
-# NOTE: Decide if we want this in terraform instead, I can see how this should be in terraform
-#       but since its part of the app it should live as a helmrelease
 ---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
@@ -12,6 +6,9 @@ metadata:
   namespace: refractr-stage
   labels:
     app: refractr
+  annotations:
+    fluxcd.io/locked: 'true'
+    fluxcd.io/locked_user: Christina Harlow <cmharlow@gmail.com>
 spec:
   releaseName: refractr-ingress-nginx
   chart:
