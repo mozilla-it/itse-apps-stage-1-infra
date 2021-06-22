@@ -17,7 +17,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set repo terraform version
-        run: echo '::set-output name=TF_VERSION::$(cat terraform/.terraform-version)'
+        run: |
+          export TFENV_TF_VERSION=$(cat .terraform-version)
+          echo 'Using version: '
+          echo $TFENV_TF_VERSION
+          echo '::set-output name=TF_VERSION::$TFENV_TF_VERSION'
         id: tf-version
 
       - name: 'Setup Terraform'
