@@ -2,7 +2,7 @@ locals {
   cluster_features = {
     "aws_calico"         = true
     "external_secrets"   = true
-    "fluentd_papertrail" = true
+    "fluentd_papertrail" = false
     "flux"               = true
     "flux_helm_operator" = true
     "prometheus"         = true
@@ -12,9 +12,9 @@ locals {
     secrets_path = "/stage/*"
   }
 
-  fluentd_papertrail_settings = {
-    "externalSecrets.secretsKey" = "/stage/${module.itse-apps-stage-1.cluster_id}-papertrail"
-  }
+  # fluentd_papertrail_settings = {
+  #   "externalSecrets.secretsKey" = "/stage/${module.itse-apps-stage-1.cluster_id}-papertrail"
+  # }
 
   flux_settings = {
     "git.url"    = "git@github.com:mozilla-it/itse-apps-stage-1-infra"
@@ -45,7 +45,7 @@ module "itse-apps-stage-1" {
   cluster_version             = "1.18"
   enable_logging              = true
   external_secrets_settings   = local.external_secrets_settings
-  fluentd_papertrail_settings = local.fluentd_papertrail_settings
+  # fluentd_papertrail_settings = local.fluentd_papertrail_settings
   flux_settings               = local.flux_settings
   node_groups                 = local.node_groups
   vpc_id                      = data.terraform_remote_state.vpc.outputs.vpc_id
