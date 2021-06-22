@@ -1,26 +1,30 @@
-name: 'Terraform fmt and validate'
+name: 'Terraform CI'
 
 on:
   - pull_request
-
-env:
-  tf_version: 'latest'
-  tf_working_dir: '.'
+  - push
 
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'terraform'
 
     steps:
       - name: 'Checkout'
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
-      - name: 'Terraform format'
-        uses: hashicorp/terraform-github-actions@master
+      - name: Set repo terraform version
+        run: echo '::set-output name=TF_VERSION::$(cat terraform/.terraform-version)'
+        id: tf-version
+
+      - name: 'Setup Terraform'
+        uses: hashicorp/setup-terraform@v1
         with:
-          tf_actions_version: ${{ env.tf_version }}
-          tf_actions_subcommand: 'fmt'
-          tf_actions_working_dir: ${{ env.tf_working_dir }}
-          tf_actions_comment: false
-          args: '-recursive'
+          terraform_version: ${{ steps.tf-version.outputs.TF_VERSION }}
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check -recursive
