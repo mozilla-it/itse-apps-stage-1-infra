@@ -1,6 +1,15 @@
 provider "aws" {
   region  = var.region
   version = "~> 3"
+
+  default_tags {
+    tags = {
+      Region      = var.region
+      Environment = var.environment
+      Terraform   = "true"
+      CostCenter  = var.cost_center
+    }
+  }
 }
 
 provider "kubernetes" {
