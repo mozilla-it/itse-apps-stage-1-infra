@@ -1,8 +1,4 @@
 terraform {
-  required_version = ">= 0.12"
-}
-
-terraform {
   backend "s3" {
     bucket = "itse-apps-stage-1-state"
     key    = "terraform.tfstate"
