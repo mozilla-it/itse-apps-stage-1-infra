@@ -45,10 +45,10 @@ module "itse-apps-stage-1" {
   cluster_version           = "1.18"
   enable_logging            = true
   external_secrets_settings = local.external_secrets_settings
+  flux_settings             = local.flux_settings
+  node_groups               = local.node_groups
+  vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
   # fluentd_papertrail_settings = local.fluentd_papertrail_settings
-  flux_settings = local.flux_settings
-  node_groups   = local.node_groups
-  vpc_id        = data.terraform_remote_state.vpc.outputs.vpc_id
 }
 
 # Chicken and egg issue, this needs to exist first
