@@ -59,11 +59,29 @@ spec:
               pathType: ImplementationSpecific
               serviceName: pastebin
               servicePort: 80
+        - host: pastebin.allizom.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+              serviceName: pastebin
+              servicePort: 80
+        - host: pastebin-dev.allizom.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+              serviceName: pastebin
+              servicePort: 80
       name: pastebin
       tls:
         - hosts:
-            - paste.allizom.com
+            - paste.allizom.org
           secretName: cert-paste-allizom-org
+        - hosts:
+            - pastebin.allizom.org
+          secretName: cert-pastebin-allizom-org
+        - hosts:
+            - pastebin-dev.allizom.org
+          secretName: cert-pastebin-dev-allizom-org
         - hosts:
             - paste.stage.mozit.cloud
           secretName: cert-paste-stage-mozit-cloud
