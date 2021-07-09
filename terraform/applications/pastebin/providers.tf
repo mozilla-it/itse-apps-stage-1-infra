@@ -3,13 +3,13 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project       = var.project
-      Region        = var.region
-      Environment   = var.environment
-      Terraform     = "true"
       CostCenter    = var.cost_center
-      Project-Desc  = "paste.allizom.org"
-      Project-Email = "it-sre@mozilla.com"
+      Environment   = var.environment
+      Project       = var.project
+      Project-Desc  = var.project_desc
+      Project-Email = var.project_email
+      Region        = var.region
+      Terraform     = "true"
     }
   }
 }
