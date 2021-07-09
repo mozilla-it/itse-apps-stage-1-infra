@@ -71,6 +71,8 @@ spec:
               pathType: ImplementationSpecific
               serviceName: pastebin
               servicePort: 80
+      le:
+        name: prod
       name: pastebin
       tls:
         - hosts:
