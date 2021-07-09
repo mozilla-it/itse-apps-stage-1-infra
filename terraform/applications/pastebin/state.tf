@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "itsre-state-783633885093"
+    bucket = "itse-apps-stage-1-state"
     key    = "us-west-2/pastebin/stage/terraform.tfstate"
-    region = "eu-west-1"
+    region = "us-west-2"
   }
 
   required_providers {
@@ -15,7 +15,7 @@ terraform {
   required_version = ">= 0.12"
 }
 
-data "terraform_remote_state" "deploy" {
+data "terraform_remote_state" "vpc" {
   backend = "s3"
 
   config = {
