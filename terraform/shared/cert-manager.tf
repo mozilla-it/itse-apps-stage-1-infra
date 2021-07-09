@@ -3,12 +3,6 @@ locals {
   cert_manager_crd_manifest = "https://github.com/jetstack/cert-manager/releases/download/${local.cert_manager_version}/cert-manager.crds.yaml"
   cert_manager_name_prefix  = "${module.itse-apps-stage-1.cluster_id}-cert-manager"
   cert_manager_namespace    = "cert-manager"
-
-  cert_manager_tags = {
-    Environment = "stage"
-    Terraform   = "true"
-  }
-
   cert_manager_settings = {
     "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.cert_manager_role.this_iam_role_arn
     "extraArgs[0]"                                              = "--issuer-ambient-credentials"
@@ -78,7 +72,7 @@ module "cert_manager_role" {
   provider_url                  = replace(module.itse-apps-stage-1.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.cert_manager.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.cert_manager_namespace}:cert-manager"]
-  tags                          = merge({ Name = "${local.cert_manager_name_prefix}-role" }, local.cert_manager_tags)
+  tags                          = { Name = "${local.cert_manager_name_prefix}-role" }
 }
 
 # CRDs have to be installed differently, there is a drama about it in the community.
