@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: pastebin
-    version: "0.1.0"
+    version: "0.1.1"
   values:
     configMap:
       data:
@@ -22,7 +22,7 @@ spec:
         VAL: "5"
     deployment:
       port: "8000"
-      replicaCount: 1
+      replicaCount: "1"
     externalSecrets:
       enabled: true
       name: pastebin
