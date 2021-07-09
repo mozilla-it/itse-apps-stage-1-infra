@@ -58,10 +58,8 @@ resource "aws_eip" "refractr_eip" {
   vpc   = true
 
   tags = {
-    Name        = "refractr-stage-${local.subnet_az[count.index]}"
-    SubnetId    = local.subnet_id[count.index]
-    App         = "refractr"
-    Environment = "stage"
-    Terraform   = "true"
+    Name     = "refractr-stage-${local.subnet_az[count.index]}"
+    SubnetId = local.subnet_id[count.index]
+    App      = "refractr"
   }
 }

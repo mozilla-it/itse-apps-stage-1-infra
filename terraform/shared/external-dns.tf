@@ -14,11 +14,6 @@ locals {
     # so we just configure it to check the service annotation instead
     "sources[0]" = "service"
   }
-
-  external_dns_tags = {
-    Environment = "stage"
-    Terraform   = "true"
-  }
 }
 
 data "aws_iam_policy_document" "external_dns" {
@@ -67,7 +62,7 @@ module "external_dns_role" {
   provider_url                  = replace(module.itse-apps-stage-1.cluster_oidc_issuer_url, "https://", "")
   role_policy_arns              = [aws_iam_policy.external_dns.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.external_dns_namespace}:external-dns"]
-  tags                          = merge({ Name = "${local.external_dns_name_prefix}-role" }, local.external_dns_tags)
+  tags                          = { Name = "${local.external_dns_name_prefix}-role" }
 }
 
 resource "helm_release" "external_dns" {
