@@ -20,8 +20,10 @@ spec:
       global_tags:
         cluster: itse-apps-stage-1-infra
       inputs:
-        - x509_cert: 
-            sources: 
+        - x509_cert:
+            # TODO: define a url that we can take down/break to do
+            # functional testing of this setup
+            sources:
               - 'https://www.firefox.com:443'
               - 'https://www.mozilla.com:443'
       outputs:

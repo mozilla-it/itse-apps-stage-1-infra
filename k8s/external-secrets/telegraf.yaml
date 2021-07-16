@@ -5,5 +5,9 @@ metadata:
   namespace: telegraf-stage
 spec:
   backendType: secretsManager
+  # Format for the secret is a flat k/v, with these keys defined:
+  # INFLUX_URL, INFLUX_DB, INFLUX_USER, INFLUX_PW
+  # the url should include https:// and a port (usually :8086)
+  # the other three values are simple strings, no complex formatting
   dataFrom:
     - /stage/telegraf
