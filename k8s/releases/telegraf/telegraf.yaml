@@ -17,6 +17,8 @@ spec:
     service:
       enabled: false
     config:
+      agent:
+        interval: "300s"
       global_tags:
         cluster: itse-apps-stage-1-infra
       inputs:
