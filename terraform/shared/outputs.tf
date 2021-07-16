@@ -17,3 +17,7 @@ output "refractr_eip_allocation_id" {
 output "refractr_ips" {
   value = aws_eip.refractr_eip.*.public_ip
 }
+
+output "stage_dns_zone_id" {
+  value = module.stage_dns_zone.zone_id
+}
