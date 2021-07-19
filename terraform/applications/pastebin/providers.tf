@@ -1,6 +1,7 @@
 provider "aws" {
   region = var.region
 
+  # see https://github.com/hashicorp/terraform-provider-aws/issues/18311
   default_tags {
     tags = {
       CostCenter    = var.cost_center
