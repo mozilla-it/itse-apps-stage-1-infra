@@ -8,6 +8,7 @@ locals {
     "replicas"                                                  = "1"
     "metrics.enabled"                                           = "true"
     "txtOwnerId"                                                = "${module.itse-apps-stage-1.cluster_id}-${random_string.string.result}"
+    "txtPrefix"                                                 = module.itse-apps-stage-1.cluster_id
     "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.external_dns_role.this_iam_role_arn
     # NOTE: The default option for this is actually ['service', 'ingress'] where external-dns
     # crates DNS Records based on the hosts specified in the ingress object. This is less than ideal
