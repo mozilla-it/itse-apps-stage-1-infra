@@ -1,0 +1,83 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: moderator
+  namespace: moderator-stage
+  labels:
+    app: moderator
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: regex:^(stg-[a-f0-9]{7})$
+spec:
+  releaseName: moderator
+  chart:
+    repository: https://mozilla-it.github.io/helm-charts/
+    name: moderator
+    version: "0.1.1"
+  values:
+    configMap:
+      data:
+        DB_PORT: "3306"
+        VAL: "5"
+    deployment:
+      port: "8000"
+      replicaCount: "1"
+    externalSecrets:
+      enabled: true
+      name: moderator
+      secrets:
+      - key: /stage/moderator/envvar
+        name: DB_HOST
+        property: database_host
+      - key: /stage/moderator/envvar
+        name: DB_NAME
+        property: database_name
+      - key: /stage/moderator/envvar
+        name: DB_PASS
+        property: database_password
+      - key: /stage/moderator/envvar
+        name: DB_USER
+        property: database_user
+      - key: /stage/moderator/envvar
+        name: SESSION_KEY
+        property: session_key
+    image:
+      pullPolicy: Always
+      tag: v3.5.4
+    ingress:
+      hosts:
+        - host: paste.stage.mozit.cloud
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+              serviceName: moderator
+              servicePort: 80
+        - host: paste.allizom.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+              serviceName: moderator
+              servicePort: 80
+        - host: moderator.allizom.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+              serviceName: moderator
+              servicePort: 80
+        - host: moderator-dev.allizom.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+              serviceName: moderator
+              servicePort: 80
+      le:
+        name: prod
+      name: moderator
+      tls:
+        - hosts:
+            - moderator.allizom.org
+          secretName: cert-moderator-allizom-org
+        - hosts:
+            - moderator.stage.mozit.cloud
+          secretName: cert-moderator-stage-mozit-cloud
