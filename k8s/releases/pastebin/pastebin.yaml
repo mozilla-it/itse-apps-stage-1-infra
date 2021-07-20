@@ -44,7 +44,7 @@ spec:
         property: session_key
     image:
       pullPolicy: Always
-      tag: v3.5.4
+      tag: stg-16c5b9c
     ingress:
       hosts:
         - host: paste.stage.mozit.cloud
