@@ -19,6 +19,7 @@ spec:
     configMap:
       data:
         DB_PORT: "3306"
+        DPASTE_BASE_DOMAIN: "paste.allizom.org"
         VAL: "5"
     deployment:
       port: "8000"
