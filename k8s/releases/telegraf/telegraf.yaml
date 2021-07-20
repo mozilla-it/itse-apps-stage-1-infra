@@ -16,7 +16,7 @@ spec:
     envFromSecret: telegraf-influx
     image:
       repo: public.ecr.aws/influxdb/telegraf
-      image: 1.16.2-alpine
+      tag: 1.16.2-alpine
     service:
       enabled: false
     config:
