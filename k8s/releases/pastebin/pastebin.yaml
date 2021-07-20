@@ -45,6 +45,7 @@ spec:
         property: session_key
     image:
       pullPolicy: Always
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/pastebin
       tag: stg-16c5b9c
     ingress:
       hosts:
