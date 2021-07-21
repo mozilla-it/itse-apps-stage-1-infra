@@ -46,7 +46,7 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/pastebin
-      tag: stg-3b885f5
+      tag: stg-462af23
     ingress:
       hosts:
       - host: paste.stage.mozit.cloud
