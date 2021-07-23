@@ -44,6 +44,7 @@ spec:
         property: session_key
     image:
       pullPolicy: Always
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
       tag: v3.5.4
     ingress:
       hosts:
