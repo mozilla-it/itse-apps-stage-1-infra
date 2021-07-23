@@ -18,8 +18,20 @@ spec:
   values:
     configMap:
       data:
-        DB_PORT: "3306"
-        VAL: "5"
+        ALLOWED_HOSTS: moderator.stage.mozit.cloud,moderator.allizom.org
+        ANON_ALWAYS: true
+        AWS_DEFAULT_REGION: us-west-2
+        FROM_NOREPLY: Mozilla Moderator <no-reply@moderator.allizom.org>
+        MOZILLIANS_API_BASE: https://mozillians.org/api/v1/users/
+        MOZILLIANS_API_URL: https://mozillians.org/api/v2/
+        OIDC_OP_AUTHORIZATION_ENDPOINT: https://auth.mozilla.auth0.com/authorize
+        OIDC_OP_DOMAIN: auth.mozilla.auth0.com
+        OIDC_OP_JWKS_ENDPOINT: https://auth.mozilla.auth0.com/.well-known/jwks.json
+        OIDC_OP_TOKEN_ENDPOINT: https://auth.mozilla.auth0.com/oauth/token
+        OIDC_OP_USER_ENDPOINT: https://auth.mozilla.auth0.com/userinfo
+        OIDC_RP_SIGN_ALGO: RS256
+        SESSION_COOKIE_SECURE: true
+        SITE_URL: https://moderator.allizom.org
     deployment:
       port: "8000"
       replicaCount: "1"
@@ -27,46 +39,40 @@ spec:
       enabled: true
       name: moderator
       secrets:
-      - key: /stage/moderator/envvar
-        name: DB_HOST
-        property: database_host
-      - key: /stage/moderator/envvar
-        name: DB_NAME
-        property: database_name
-      - key: /stage/moderator/envvar
-        name: DB_PASS
-        property: database_password
-      - key: /stage/moderator/envvar
-        name: DB_USER
-        property: database_user
-      - key: /stage/moderator/envvar
-        name: SESSION_KEY
-        property: session_key
+        - key: /stage/moderator/envvar
+          name: AWS_ACCESS_KEY_ID
+          property: AWS_ACCESS_KEY_ID
+        - key: /stage/moderator/envvar
+          name: AWS_SECRET_ACCESS_KEY
+          property: AWS_SECRET_ACCESS_KEY
+        - key: /stage/moderator/envvar
+          name: DATABASE_URL
+          property: DATABASE_URL
+        - key: /stage/moderator/envvar
+          name: OIDC_RP_CLIENT_ID
+          property: OIDC_RP_CLIENT_ID
+        - key: /stage/moderator/envvar
+          name: OIDC_RP_CLIENT_SECRET
+          property: OIDC_RP_CLIENT_SECRET
+        - key: /stage/moderator/envvar
+          name: SECRET_KEY
+          property: SECRET_KEY
+        - key: /stage/moderator/envvar
+          name: SENTRY_DSN
+          property: SENTRY_DSN
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
-      tag: v3.5.4
+      tag: stg-3e5f3ee
     ingress:
       hosts:
-        - host: paste.stage.mozit.cloud
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-              serviceName: moderator
-              servicePort: 80
-        - host: paste.allizom.org
+        - host: moderator.stage.mozit.cloud
           paths:
             - path: /
               pathType: ImplementationSpecific
               serviceName: moderator
               servicePort: 80
         - host: moderator.allizom.org
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-              serviceName: moderator
-              servicePort: 80
-        - host: moderator-dev.allizom.org
           paths:
             - path: /
               pathType: ImplementationSpecific
