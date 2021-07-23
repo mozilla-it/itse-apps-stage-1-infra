@@ -39,52 +39,52 @@ spec:
       enabled: true
       name: moderator
       secrets:
-        - key: /stage/moderator/envvar
-          name: AWS_ACCESS_KEY_ID
-          property: AWS_ACCESS_KEY_ID
-        - key: /stage/moderator/envvar
-          name: AWS_SECRET_ACCESS_KEY
-          property: AWS_SECRET_ACCESS_KEY
-        - key: /stage/moderator/envvar
-          name: DATABASE_URL
-          property: DATABASE_URL
-        - key: /stage/moderator/envvar
-          name: OIDC_RP_CLIENT_ID
-          property: OIDC_RP_CLIENT_ID
-        - key: /stage/moderator/envvar
-          name: OIDC_RP_CLIENT_SECRET
-          property: OIDC_RP_CLIENT_SECRET
-        - key: /stage/moderator/envvar
-          name: SECRET_KEY
-          property: SECRET_KEY
-        - key: /stage/moderator/envvar
-          name: SENTRY_DSN
-          property: SENTRY_DSN
+      - key: /stage/moderator/envvar
+        name: AWS_ACCESS_KEY_ID
+        property: AWS_ACCESS_KEY_ID
+      - key: /stage/moderator/envvar
+        name: AWS_SECRET_ACCESS_KEY
+        property: AWS_SECRET_ACCESS_KEY
+      - key: /stage/moderator/envvar
+        name: DATABASE_URL
+        property: DATABASE_URL
+      - key: /stage/moderator/envvar
+        name: OIDC_RP_CLIENT_ID
+        property: OIDC_RP_CLIENT_ID
+      - key: /stage/moderator/envvar
+        name: OIDC_RP_CLIENT_SECRET
+        property: OIDC_RP_CLIENT_SECRET
+      - key: /stage/moderator/envvar
+        name: SECRET_KEY
+        property: SECRET_KEY
+      - key: /stage/moderator/envvar
+        name: SENTRY_DSN
+        property: SENTRY_DSN
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
-      tag: stg-3e5f3ee
+      tag: stg-da6a57d
     ingress:
       hosts:
-        - host: moderator.stage.mozit.cloud
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-              serviceName: moderator
-              servicePort: 80
-        - host: moderator.allizom.org
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-              serviceName: moderator
-              servicePort: 80
+      - host: moderator.stage.mozit.cloud
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          serviceName: moderator
+          servicePort: 80
+      - host: moderator.allizom.org
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+          serviceName: moderator
+          servicePort: 80
       le:
         name: prod
       name: moderator
       tls:
-        - hosts:
-            - moderator.allizom.org
-          secretName: cert-moderator-allizom-org
-        - hosts:
-            - moderator.stage.mozit.cloud
-          secretName: cert-moderator-stage-mozit-cloud
+      - hosts:
+        - moderator.allizom.org
+        secretName: cert-moderator-allizom-org
+      - hosts:
+        - moderator.stage.mozit.cloud
+        secretName: cert-moderator-stage-mozit-cloud
