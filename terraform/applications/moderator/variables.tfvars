@@ -7,5 +7,5 @@ mysql_storage_max       = 20
 mysql_version           = "5.6"
 project                 = "moderator"
 project_desc            = "moderator.allizom.org"
-project_email           = "it-sre@allizom.com"
+project_email           = "it-sre@mozilla.com"
 region                  = "us-west-2"
