@@ -13,11 +13,6 @@ variable "moderator_mozilla" {
   type    = string
 }
 
-variable "moderator_mozit" {
-  default = "moderator.stage.mozit.cloud"
-  type    = string
-}
-
 variable "mysql_instance" {
   default = "db.t3.micro"
   type    = string

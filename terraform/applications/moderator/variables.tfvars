@@ -1,7 +1,6 @@
 cost_center             = "1410"
 environment             = "stage"
 moderator_mozilla       = "moderator.allizom.org"
-moderator_mozit         = "moderator.stage.mozit.cloud"
 mysql_instance          = "db.t3.micro"
 mysql_storage_allocated = 5
 mysql_storage_max       = 20
