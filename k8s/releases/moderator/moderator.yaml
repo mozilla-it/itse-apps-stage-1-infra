@@ -61,7 +61,7 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
-      tag: stg-e3efca5
+      tag: stg-25329dd
     ingress:
       hosts:
       - host: moderator.stage.mozit.cloud
