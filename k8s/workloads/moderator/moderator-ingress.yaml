@@ -37,7 +37,7 @@ spec:
         use-proxy-protocol: "false"
         use-forwarded-headers: "true"
         # restrict this to the IP addresses of ELB
-        proxy-real-ip-cidr: "0.0.0.0/0"
+        proxy-real-ip-cidr: "172.16.0.0/16"
       service:
         externalTrafficPolicy: "Local"
         annotations:
