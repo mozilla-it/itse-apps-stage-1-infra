@@ -34,8 +34,8 @@ spec:
       scope:
         enabled: true
       config:
-        use-proxy-protocol: "false"
-        use-forwarded-headers: "true"
+        use-proxy-protocol: "true"
+        use-forwarded-headers: "false"
         # restrict this to the IP addresses of ELB
         proxy-real-ip-cidr: "172.16.0.0/16"
       service:
