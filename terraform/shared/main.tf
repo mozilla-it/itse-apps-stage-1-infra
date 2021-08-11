@@ -8,9 +8,12 @@ locals {
     "prometheus"         = true
   }
 
-  external_secrets_settings = {
-    secrets_path = "/stage/*"
-  }
+  external_secrets_settings = {}
+
+  external_secrets_paths = [
+    "/dev/*",
+    "/stage/*"
+  ]
 
   # fluentd_papertrail_settings = {
   #   "externalSecrets.secretsKey" = "/stage/${module.itse-apps-stage-1.cluster_id}-papertrail"
@@ -37,7 +40,7 @@ locals {
 }
 
 module "itse-apps-stage-1" {
-  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
+  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=SE-2169"
   cluster_name              = "itse-apps-stage-1"
   admin_users_arn           = ["arn:aws:iam::783633885093:role/maws-admin", "arn:aws:iam::517826968395:role/itsre-admin"]
   cluster_features          = local.cluster_features
@@ -45,6 +48,7 @@ module "itse-apps-stage-1" {
   cluster_version           = "1.18"
   enable_logging            = true
   external_secrets_settings = local.external_secrets_settings
+  external_secrets_paths    = local.external_secrets_paths
   flux_settings             = local.flux_settings
   node_groups               = local.node_groups
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
