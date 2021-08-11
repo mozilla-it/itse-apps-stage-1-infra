@@ -1,0 +1,66 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx
+  namespace: discourse-stage
+  labels:
+    app: discourse-stage
+spec:
+  releaseName: discourse-stage-ingress-nginx
+  chart:
+    repository: https://kubernetes.github.io/ingress-nginx
+    name: ingress-nginx
+    version: "3.33.0"
+  values:
+    controller:
+      useIngressClassOnly: true
+      enableCustomResources: false
+      autoscaling:
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 4
+        targetCPUUtilizationPercentage: 80
+        targetMemoryUtilizationPercentage: 80
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+      admissionWebhooks:
+        enable: false
+      scope:
+        enabled: true
+      config:
+        enable-vts-status: true
+        force-ssl-redirect: true
+        # Rate limitting: defaults x7
+        limit-connections: "140"
+        limit-rpm: "1400"
+        limit-rps: "84"
+        proxy-body-size: 4m
+        proxy-buffer-size: 16k
+        # restrict this to the IP addresses of ELB
+        proxy-real-ip-cidr: "0.0.0.0/0"
+        ssl-redirect: true
+        use-forwarded-headers: "true"
+        use-proxy-protocol: "false"
+      service:
+        externalTrafficPolicy: "Local"
+        annotations:
+          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+          service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+          service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Environment=stage"
+          external-dns.alpha.kubernetes.io/hostname: "discourse.stage.mozit.cloud,discourse.allizom.org"
+      metrics:
+        enabled: true
+        service:
+          annotations:
+            prometheus.io/scrape: "true"
+            prometheus.io/port: "10254"
+    rbac:
+      create: true
+      scope: true
