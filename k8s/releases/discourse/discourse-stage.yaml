@@ -5,7 +5,8 @@ metadata:
   name: discourse
   namespace: discourse-stage
   labels:
-    app: discourse-stage
+    app: discourse
+    env: stage
   annotations:
     fluxcd.io/automated: "true"
     filter.fluxcd.io/chart-image: regex:^(stage-[a-f0-9]{7}-[0-9]*)$

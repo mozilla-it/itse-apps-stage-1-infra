@@ -5,7 +5,8 @@ metadata:
   name: ingress-nginx
   namespace: discourse-stage
   labels:
-    app: discourse-stage
+    app: discourse
+    env: stage
 spec:
   releaseName: discourse-stage-ingress-nginx
   chart:
