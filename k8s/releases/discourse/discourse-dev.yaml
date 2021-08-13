@@ -5,7 +5,8 @@ metadata:
   name: discourse
   namespace: discourse-dev
   labels:
-    app: discourse-dev
+    app: discourse
+    env: dev
   annotations:
     fluxcd.io/automated: "true"
     filter.fluxcd.io/chart-image: regex:^(dev-[a-f0-9]{7}-[0-9]*)$
