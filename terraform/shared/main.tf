@@ -10,11 +10,6 @@ locals {
 
   external_secrets_settings = {}
 
-  external_secrets_paths = [
-    "/dev/*",
-    "/stage/*"
-  ]
-
   # fluentd_papertrail_settings = {
   #   "externalSecrets.secretsKey" = "/stage/${module.itse-apps-stage-1.cluster_id}-papertrail"
   # }
@@ -48,7 +43,7 @@ module "itse-apps-stage-1" {
   cluster_version           = "1.18"
   enable_logging            = true
   external_secrets_settings = local.external_secrets_settings
-  external_secrets_paths    = local.external_secrets_paths
+  external_secrets_prefixes = ["/dev/*", "/stage/*"]
   flux_settings             = local.flux_settings
   node_groups               = local.node_groups
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
