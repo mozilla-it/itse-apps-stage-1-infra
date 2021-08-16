@@ -219,7 +219,7 @@ resource "aws_cloudwatch_log_group" "lambda_incoming_email" {
 resource "aws_cloudwatch_log_subscription_filter" "lambda_incoming_email_to_papertrail" {
   name            = "discourse-${local.workspace.environment}-processed-email-logs-to-papertrail"
   log_group_name  = aws_cloudwatch_log_group.lambda_incoming_email.name
-  destination_arn = aws_lambda_function.logs_to_papertrail.arn
+  destination_arn = data.terraform_remote_state.vpc.outputs.cloudwatch_to_papertrail_lambda_arn
   filter_pattern  = ""
 }
 

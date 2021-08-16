@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "discourse_role" {
   name               = "discourse-${local.workspace.environment}"
   path               = "/discourse/"
