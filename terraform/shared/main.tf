@@ -35,7 +35,7 @@ locals {
 }
 
 module "itse-apps-stage-1" {
-  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=SE-2169"
+  source                    = "github.com/mozilla-it/terraform-modules//aws/eks?ref=master"
   cluster_name              = "itse-apps-stage-1"
   admin_users_arn           = ["arn:aws:iam::783633885093:role/maws-admin", "arn:aws:iam::517826968395:role/itsre-admin"]
   cluster_features          = local.cluster_features
