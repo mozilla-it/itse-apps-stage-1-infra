@@ -1,8 +1,9 @@
 terraform {
   backend "s3" {
     bucket = "itse-apps-stage-1-state"
-    key    = "us-west-2/discourse/stage/terraform.tfstate"
+    key    = "terraform.tfstate"
     region = "us-west-2"
+    workspace_key_prefix = "us-west-2/discourse/workspace"
   }
 
   required_providers {
