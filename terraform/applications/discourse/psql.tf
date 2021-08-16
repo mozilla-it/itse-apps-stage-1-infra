@@ -42,7 +42,7 @@ resource "aws_security_group" "discourse-db" {
 
 locals {
   subnet_db_name_tags = {
-    Name = "discourse-${local.workspace.environment}-redis"
+    Name = "discourse-${local.workspace.environment}-psql"
   }
 }
 
