@@ -40,12 +40,6 @@ resource "aws_security_group" "discourse-db" {
   }
 }
 
-locals {
-  subnet_db_name_tags = {
-    Name = "discourse-${local.workspace.environment}-psql"
-  }
-}
-
 output "rds_endpoint" {
   value = aws_db_instance.discourse.endpoint
 }
