@@ -6,6 +6,7 @@ locals {
     "flux"               = true
     "flux_helm_operator" = true
     "prometheus"         = true
+    "configmapsecrets"   = true
   }
 
   external_secrets_settings = {}
@@ -48,6 +49,12 @@ module "itse-apps-stage-1" {
   node_groups               = local.node_groups
   vpc_id                    = data.terraform_remote_state.vpc.outputs.vpc_id
   # fluentd_papertrail_settings = local.fluentd_papertrail_settings
+  prometheus_settings = {}
+  prometheus_customization_settings = {
+    "influxdb.enabled" : "true"
+    "influxdb.secret_key" : "/stage/influxdb/stage"
+  }
+  influxdb = true
 }
 
 # Chicken and egg issue, this needs to exist first
