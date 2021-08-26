@@ -1,7 +1,7 @@
 module "password" {
   source         = "github.com/mozilla-it/terraform-modules//aws/rand-password?ref=master"
-  environment    = "stage"
-  service_name   = "careers"
+  environment    = local.environment
+  service_name   = local.project
   password_store = "secretsmanager"
   keyname        = "postgres_password"
 }
