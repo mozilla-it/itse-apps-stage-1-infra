@@ -3,7 +3,7 @@ module "password" {
   environment    = local.environment
   service_name   = local.project
   password_store = "secretsmanager"
-  keyname        = "postgres_password"
+  keyname        = "rds_password"
   password_config = {
       special        = false
   }
