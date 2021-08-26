@@ -5,7 +5,7 @@ module "password" {
   password_store = "secretsmanager"
   keyname        = "rds_password"
   password_config = {
-      special        = false
+    special = false
   }
 }
 
