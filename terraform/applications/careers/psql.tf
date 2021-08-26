@@ -4,6 +4,9 @@ module "password" {
   service_name   = local.project
   password_store = "secretsmanager"
   keyname        = "postgres_password"
+  password_config = {
+      special        = false
+  }
 }
 
 resource "aws_db_instance" "careers" {
