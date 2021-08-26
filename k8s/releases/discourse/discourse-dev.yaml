@@ -9,7 +9,7 @@ metadata:
     env: dev
   annotations:
     fluxcd.io/automated: "true"
-    filter.fluxcd.io/chart-image: regex:^(dev-[a-f0-9]{7})$
+    filter.fluxcd.io/chart-image: regex:^(dev-[a-f0-9]{4,10})$
 spec:
   releaseName: discourse-dev
   chart:
