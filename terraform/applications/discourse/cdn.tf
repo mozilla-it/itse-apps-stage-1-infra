@@ -2,7 +2,7 @@ resource "aws_cloudfront_distribution" "discourse" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = ["cdn.${local.workspace.discourse_cdn_zone}"]
+  aliases             = ["cdn.${local.workspace.discourse_mozilla}"]
   comment             = "Discourse ${local.workspace.environment} CDN"
   price_class         = local.workspace.cf_price_class
   depends_on = [
@@ -11,7 +11,7 @@ resource "aws_cloudfront_distribution" "discourse" {
   ]
 
   origin {
-    domain_name = local.workspace.discourse_cdn_zone
+    domain_name = local.workspace.discourse_mozilla
     origin_id   = "discourse-pull-origin"
     origin_path = ""
 
@@ -82,7 +82,7 @@ resource "aws_cloudfront_distribution" "discourse" {
 }
 
 resource "aws_acm_certificate" "cdn" {
-  domain_name       = "cdn.${local.workspace.discourse_cdn_zone}"
+  domain_name       = "cdn.${local.workspace.discourse_mozilla}"
   validation_method = "DNS"
   provider          = aws.us-east-1
 
@@ -94,7 +94,7 @@ resource "aws_acm_certificate" "cdn" {
 resource "aws_route53_record" "cdn_cert_validation" {
   name    = tolist(aws_acm_certificate.cdn.domain_validation_options)[0].resource_record_name
   type    = tolist(aws_acm_certificate.cdn.domain_validation_options)[0].resource_record_type
-  zone_id = aws_route53_zone.cdn.id
+  zone_id = module.discourse_mozilla.zone_id
   records = [tolist(aws_acm_certificate.cdn.domain_validation_options)[0].resource_record_value]
   ttl     = 60
 }
@@ -128,14 +128,9 @@ resource "aws_s3_bucket" "cdn_logs" {
 }
 
 resource "aws_route53_record" "cdn_alias" {
-  name    = "cdn.${local.workspace.discourse_cdn_zone}"
+  name    = "cdn.${local.workspace.discourse_mozilla}"
   type    = "CNAME"
-  zone_id = aws_route53_zone.cdn.id
+  zone_id = module.discourse_mozilla.zone_id
   records = [aws_cloudfront_distribution.discourse.domain_name]
   ttl     = 60
-}
-
-resource "aws_route53_zone" "cdn" {
-  name          = "${local.workspace.discourse_cdn_zone}."
-  force_destroy = "false"
 }

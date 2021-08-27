@@ -12,7 +12,6 @@ locals {
     }
 
     dev = {
-      discourse_cdn_zone     = "discourse-dev.itsre-apps.mozit.cloud"
       discourse_mozilla      = "discourse-dev.allizom.org"
       environment            = "dev"
       psql_instance          = "db.t3.micro"
@@ -25,7 +24,6 @@ locals {
     }
 
     stage = {
-      discourse_cdn_zone     = "discourse-stage.itsre-apps.mozit.cloud"
       discourse_mozilla      = "discourse.allizom.org"
       environment            = "stage"
       psql_instance          = "db.t3.micro"

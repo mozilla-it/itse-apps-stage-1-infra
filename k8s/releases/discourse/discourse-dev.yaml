@@ -23,7 +23,7 @@ spec:
         DISCOURSE_AUTO_EMAIL_IN_DIVIDER: .
         DISCOURSE_AUTO_EMAIL_IN_DOMAIN: discourse-dev.allizom.org
         DISCOURSE_AUTO_EMAIL_IN_ENABLED: true
-        DISCOURSE_CDN_URL: https://cdn.discourse-dev.itsre-apps.mozit.cloud
+        DISCOURSE_CDN_URL: https://cdn.discourse-dev.allizom.org
         DISCOURSE_CONTENT_SECURITY_POLICY: false
         DISCOURSE_EMAIL_IN: true
         DISCOURSE_EMAIL_IN_AUTHSERV_ID: amazonses.com
