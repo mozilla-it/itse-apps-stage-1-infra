@@ -92,7 +92,7 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/discourse
-      tag: stage-7508eeb
+      tag: stage-cdf88e4
     ingress:
       hosts:
       - host: discourse.stage.mozit.cloud
