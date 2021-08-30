@@ -1,0 +1,24 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: etherpad-oidc-gateway
+  namespace: etherpad-stage
+  labels:
+    app: etherpad-oidc-gateway
+spec:
+  releaseName: etherpad-oidc-gateway
+  chart:
+    git: git@github.com:mozilla-it/helm-charts
+    ref: SE-1151
+    path: charts/oidc-gateway
+    # repository: https://mozilla-it.github.io/helm-charts/
+    # name: oidc-gateway
+    # version: "1.0.0"
+  values:
+    configMap:
+      data: 
+        upstream: etherpad
+    externalSecrets:
+      enabled: true
+      secretPath: "stage/etherpad"
