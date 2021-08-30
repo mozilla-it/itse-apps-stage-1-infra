@@ -1,0 +1,87 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: etherpad
+  namespace: etherpad-stage
+  labels:
+    app: etherpad
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: regex:^(stg-[a-f0-9]{7})$
+spec:
+  releaseName: etherpad
+  chart:
+    git: git@github.com:mozilla-it/helm-charts
+    ref: SE-1151
+    path: charts/etherpad
+    # repository: https://mozilla-it.github.io/helm-charts/
+    # name: etherpad
+    # version: "1.0.0"
+  values:
+    configMap:
+      data:
+        DB_CHARSET: utf8mb4
+        DB_PORT: "3306"
+        DB_TYPE: mysql
+        PORT: "80"
+        TITLE: Etherpad
+    externalSecrets:
+      enabled: true
+      secrets:
+      - key: /stage/etherpad/envvar
+        name: ADMIN_PASSWORD
+        property: ADMIN_PASSWORD
+      - key: /stage/etherpad/envvar
+        name: DB_HOST
+        property: DB_HOST
+      - key: /stage/etherpad/envvar
+        name: DB_NAME
+        property: DB_NAME
+      - key: /stage/etherpad/envvar
+        name: DB_PASS
+        property: DB_PASS
+      - key: /stage/etherpad/envvar
+        name: DB_USER
+        property: DB_USER
+      - key: /stage/etherpad/envvar
+        name: ETHERPAD_API_KEY
+        property: ETHERPAD_API_KEY
+      - key: /stage/etherpad/envvar
+        name: ETHERPAD_SESSION_KEY
+        property: ETHERPAD_SESSION_KEY
+    image:
+      pullPolicy: Always
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/etherpad
+      tag: stg-8065082
+    ingress:
+      hosts:
+      - host: pad.allizom.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            serviceName: oidc-gateway
+            servicePort: 80
+      - host: pad.stage.mozit.cloud
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            serviceName: oidc-gateway
+            servicePort: 80
+      le:
+        issuer_create: true
+        name: prod
+      tls:
+      - hosts:
+          - pad.allizom.com
+        secretName: chart-pad-allizom-org
+      - hosts:
+          - pad.stage.mozit.cloud
+        secretName: chart-pad-stage-mozit-cloud
+    # oidc-gateway:
+    #   configMap:
+    #     data: 
+    #       upstream: etherpad
+    #   externalSecrets:
+    #     enabled: true
+    #     secretPath: "stage/etherpad"
