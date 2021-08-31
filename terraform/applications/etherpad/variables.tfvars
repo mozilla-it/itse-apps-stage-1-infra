@@ -1,6 +1,0 @@
-cost_center   = "1440"
-environment   = "stage"
-project       = "etherpad"
-project_desc  = "pad.allizom.org"
-project_email = "it-sre@mozilla.com"
-region        = "us-west-2"
