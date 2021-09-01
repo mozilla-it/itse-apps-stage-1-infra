@@ -45,7 +45,7 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/etherpad
-      tag: stg-58c74ea
+      tag: stg-724a722
     ingress:
       hosts:
       - host: pad.allizom.org
