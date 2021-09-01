@@ -45,28 +45,28 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/etherpad
-      tag: stg-9922b5f
+      tag: stg-58c74ea
     ingress:
       hosts:
       - host: pad.allizom.org
         paths:
-          - path: /
-            pathType: ImplementationSpecific
-            serviceName: oidc-gateway
-            servicePort: 80
+        - path: /
+          pathType: ImplementationSpecific
+          serviceName: oidc-gateway
+          servicePort: 80
       - host: pad.stage.mozit.cloud
         paths:
-          - path: /
-            pathType: ImplementationSpecific
-            serviceName: oidc-gateway
-            servicePort: 80
+        - path: /
+          pathType: ImplementationSpecific
+          serviceName: oidc-gateway
+          servicePort: 80
       le:
         issuer_create: true
         name: prod
       tls:
       - hosts:
-          - pad.allizom.org
+        - pad.allizom.org
         secretName: chart-pad-allizom-org
       - hosts:
-          - pad.stage.mozit.cloud
+        - pad.stage.mozit.cloud
         secretName: chart-pad-stage-mozit-cloud
