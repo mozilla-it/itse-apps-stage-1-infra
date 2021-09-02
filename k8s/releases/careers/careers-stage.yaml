@@ -21,7 +21,8 @@ spec:
       minReplicas: 2
       maxReplicas: 3
     image:
-      tag: 'stg-91980d9b'
+      tag: 'stg-1226f8c5'
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/careers
     externalSecrets:
       enabled: true
       secretName: '/stage/careers/secret'
