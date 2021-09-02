@@ -11,19 +11,6 @@ resource "aws_cloudfront_distribution" "discourse" {
   ]
 
   origin {
-    domain_name = local.workspace.discourse_cdn_zone
-    origin_id   = "discourse-pull-origin-old"
-    origin_path = ""
-
-    custom_origin_config {
-      http_port              = "80"
-      https_port             = "443"
-      origin_protocol_policy = "https-only" # Only talk to the origin over HTTPS
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    }
-  }
-
-  origin {
     domain_name = "discourse.${local.workspace.environment}.mozit.cloud"
     origin_id   = "discourse-pull-origin"
     origin_path = ""
