@@ -44,4 +44,4 @@ spec:
       tls:
       - hosts:
         - careers.stage.mozit.cloud
-        secretName: cert-careers-mozit-cloud
+        secretName: cert-careers-stage-mozit-cloud
