@@ -54,7 +54,7 @@ spec:
           service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
           service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
           service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Environment=stage"
-          external-dns.alpha.kubernetes.io/hostname: "careers.stage.itsre-apps.mozit.cloud"
+          external-dns.alpha.kubernetes.io/hostname: "careers.stage.mozit.cloud"
     rbac:
       create: true
       scope: true
