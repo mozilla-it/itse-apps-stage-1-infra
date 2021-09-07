@@ -21,7 +21,7 @@ spec:
       minReplicas: 2
       maxReplicas: 3
     image:
-      tag: 'stg-763e437b'
+      tag: 'stg-e0223dec'
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/careers
     externalSecrets:
       enabled: true
