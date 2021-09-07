@@ -34,7 +34,7 @@ spec:
         name: prod
         prod: https://acme-v02.api.letsencrypt.org/directory
       hosts:
-      - host: careers.stage.mozit.cloud
+      - host: careers-admin.stage.mozit.cloud
         paths:
         - path: /
           backend:
@@ -43,5 +43,5 @@ spec:
       name: careers
       tls:
       - hosts:
-        - careers.stage.mozit.cloud
+        - careers-admin.stage.mozit.cloud
         secretName: cert-careers-stage-mozit-cloud
