@@ -16,7 +16,7 @@ locals {
   s3_website_endpoint = "${local.bucket_name}.${local.s3_website_domain}"
   s3_zone             = "Z3BJ6K6RIION7M" # this is a magical s3 zone
 
-  domain_name               = "careers-rendered.stage.mozit.cloud"
+  domain_name               = "careers.stage.mozit.cloud"
   subject_alternative_names = []
   aliases                   = concat([local.domain_name], local.subject_alternative_names)
   r53_zone                  = "Z0567090QXTU93SH7QB3" # stage.mozit.cloud
