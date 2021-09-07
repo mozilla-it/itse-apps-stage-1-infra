@@ -11,10 +11,10 @@ locals {
   psql_multiaz           = false
 
   # s3/static site config
-  bucket_name =  "mozilla-careers-stage-783633885093"
-  s3_website_domain = "s3-website-us-west-2.amazonaws.com"
-  s3_website_endpoint       = "${local.bucket_name}.${local.s3_website_domain}"
-  s3_zone = "Z3BJ6K6RIION7M" # this is a magical s3 zone
+  bucket_name         = "mozilla-careers-stage-783633885093"
+  s3_website_domain   = "s3-website-us-west-2.amazonaws.com"
+  s3_website_endpoint = "${local.bucket_name}.${local.s3_website_domain}"
+  s3_zone             = "Z3BJ6K6RIION7M" # this is a magical s3 zone
 
   domain_name               = "careers-rendered.stage.mozit.cloud"
   subject_alternative_names = []
