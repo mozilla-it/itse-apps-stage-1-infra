@@ -19,5 +19,5 @@ locals {
   domain_name               = "careers.stage.mozit.cloud"
   subject_alternative_names = []
   aliases                   = concat([local.domain_name], local.subject_alternative_names)
-  r53_zone                  = "Z0567090QXTU93SH7QB3" # stage.mozit.cloud
+  r53_zone_name             = "stage.mozit.cloud."
 }
