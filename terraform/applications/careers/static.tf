@@ -1,14 +1,16 @@
 # all the relevant infra for the static site
 resource "aws_s3_bucket" "logs" {
-  bucket = "mozilla-careers-logs-783633885093"
+  bucket = "mozilla-careers-logs-${local.environment}-783633885093"
   acl    = "log-delivery-write"
+
+  force_destroy = true
 }
 
 resource "aws_s3_bucket" "mozilla-careers" {
   bucket = local.bucket_name
   acl    = "log-delivery-write"
 
-  force_destroy = true
+  force_destroy = true # just for stage, makes it easier to recycle buckets
 
   hosted_zone_id = local.s3_zone
   logging {
@@ -186,4 +188,38 @@ resource "aws_route53_record" "careers-cloudfront" {
     zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
     evaluate_target_health = false
   }
+}
+
+data "aws_caller_identity" "current" {}
+
+locals {
+  cluster_workers_role_name = replace(
+    data.terraform_remote_state.k8s.outputs.cluster_worker_iam_role_arn,
+    "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/",
+    ""
+  )
+}
+
+resource "aws_iam_role_policy" "careers_uploads" {
+  name = "careers-${local.environment}-uploads"
+  role = local.cluster_workers_role_name
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${aws_s3_bucket.mozilla-careers.arn}/*",
+        "${aws_s3_bucket.mozilla-careers.arn}"
+			]
+    }
+  ]
+}
+EOF
+
 }
