@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "itse-apps-prod-1-state"
+    bucket = "itse-apps-stage-1-state"
     key    = "us-west-2/careers/stage/terraform.tfstate"
     region = "us-west-2"
   }
@@ -29,7 +29,7 @@ data "terraform_remote_state" "k8s" {
   backend = "s3"
 
   config = {
-    bucket = "itse-apps-prod-1-state"
+    bucket = "itse-apps-stage-1-state"
     key    = "terraform.tfstate"
     region = "us-west-2"
   }
