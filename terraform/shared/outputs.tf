@@ -10,6 +10,10 @@ output "cluster_worker_iam_role_arn" {
   value = module.itse-apps-stage-1.worker_iam_role_arn
 }
 
+output "cluster_worker_iam_role_name" {
+  value = module.itse-apps-stage-1.worker_iam_role_name
+}
+
 output "cluster_oidc_issuer_url" {
   value = module.itse-apps-stage-1.cluster_oidc_issuer_url
 }
