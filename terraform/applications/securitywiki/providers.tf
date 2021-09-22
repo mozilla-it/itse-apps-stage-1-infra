@@ -6,6 +6,7 @@ provider "aws" {
     tags = {
       CostCenter    = var.cost_center
       Environment   = var.environment
+      Name          = "${var.project}-${var.environment}"
       Project       = var.project
       Project-Desc  = var.project_desc
       Project-Email = var.project_email
