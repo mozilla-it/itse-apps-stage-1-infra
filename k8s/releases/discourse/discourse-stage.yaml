@@ -15,7 +15,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: discourse
-    version: "1.0.0"
+    version: "2.0.0"
   values:
     configMap:
       data:
@@ -48,6 +48,7 @@ spec:
         enabled: true
     externalSecrets:
       enabled: true
+      loggerSecretKey: /stage/discourse/logger
       name: discourse
       secrets:
       - key: /stage/discourse/envvar
