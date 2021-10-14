@@ -38,4 +38,5 @@ resource "aws_db_instance" "moderator" {
   backup_retention_period     = 30
   db_subnet_group_name        = aws_db_subnet_group.moderator-db.id
   vpc_security_group_ids      = [aws_security_group.moderator-db.id]
+  apply_immediately           = true
 }
