@@ -15,7 +15,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: discourse
-    version: "2.0.1"
+    version: "2.0.2"
   values:
     configMap:
       data:
@@ -95,6 +95,11 @@ spec:
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/discourse
       tag: stage-0bb38f7
     ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/server-snippet: |
+              location /webhooks/aws {
+                deny all;
+              }
       hosts:
       - host: discourse.stage.mozit.cloud
         paths:
