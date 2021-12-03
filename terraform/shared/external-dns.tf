@@ -9,7 +9,7 @@ locals {
     "metrics.enabled"                                           = "true"
     "txtOwnerId"                                                = "${module.itse-apps-stage-1.cluster_id}-${random_string.string.result}"
     "txtPrefix"                                                 = module.itse-apps-stage-1.cluster_id
-    "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.external_dns_role.this_iam_role_arn
+    "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.external_dns_role.iam_role_arn
     # NOTE: The default option for this is actually ['service', 'ingress'] where external-dns
     # crates DNS Records based on the hosts specified in the ingress object. This is less than ideal
     # so we just configure it to check the service annotation instead
@@ -57,7 +57,7 @@ resource "aws_iam_policy" "external_dns" {
 
 module "external_dns_role" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "~> v2.20.0"
+  version                       = "~> 4.3"
   create_role                   = true
   role_name                     = "${local.external_dns_name_prefix}-role"
   provider_url                  = replace(module.itse-apps-stage-1.cluster_oidc_issuer_url, "https://", "")

@@ -4,7 +4,7 @@ locals {
   cert_manager_name_prefix  = "${module.itse-apps-stage-1.cluster_id}-cert-manager"
   cert_manager_namespace    = "cert-manager"
   cert_manager_settings = {
-    "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.cert_manager_role.this_iam_role_arn
+    "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn" = module.cert_manager_role.iam_role_arn
     "extraArgs[0]"                                              = "--issuer-ambient-credentials"
     "securityContext.fsGroup"                                   = "1001"
   }
@@ -66,7 +66,7 @@ resource "aws_iam_policy" "cert_manager" {
 
 module "cert_manager_role" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "~> v2.20.0"
+  version                       = "~> 4.3"
   create_role                   = true
   role_name                     = "${local.cert_manager_name_prefix}-role"
   provider_url                  = replace(module.itse-apps-stage-1.cluster_oidc_issuer_url, "https://", "")
