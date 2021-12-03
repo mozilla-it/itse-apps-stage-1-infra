@@ -26,7 +26,7 @@ terraform {
     }
   }
 
-  required_version = ">= 0.13.7"
+  required_version = ">= 1.0"
 }
 
 data "terraform_remote_state" "vpc" {
