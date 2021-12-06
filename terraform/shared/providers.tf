@@ -2,14 +2,15 @@ provider "aws" {
   region = var.region
 
   # see https://github.com/hashicorp/terraform-provider-aws/issues/18311
-  default_tags {
-    tags = {
-      CostCenter  = var.cost_center
-      Environment = var.environment
-      Region      = var.region
-      Terraform   = "true"
-    }
-  }
+  # Remove for a while to avoid trying to keep tagging on every tf plan
+  #default_tags {
+  #  tags = {
+  #    CostCenter  = var.cost_center
+  #    Environment = var.environment
+  #    Region      = var.region
+  #    Terraform   = "true"
+  #  }
+  #}
 }
 
 provider "kubernetes" {
