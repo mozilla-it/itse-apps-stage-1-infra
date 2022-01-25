@@ -40,7 +40,7 @@ spec:
         proxy-real-ip-cidr: "0.0.0.0/0"
         # HSTS disable here, to be picked up by refractr during redirect
         hsts: "false"
-        # TODO: ALAN 
+        # SE-3010 Prefer 301 instead of 308 as older browsers do not support 308
         http-redirect-code: "301"
       service:
         externalTrafficPolicy: "Local"
