@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: refractr
-    version: "1.0.25"
+    version: "1.1.1"
   values:
     hpa:
       enabled: true
