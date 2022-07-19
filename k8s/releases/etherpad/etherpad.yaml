@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: etherpad
-    version: "1.0.2"
+    version: "1.0.3"
   values:
     configMap:
       data: {}
@@ -47,6 +47,7 @@ spec:
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/etherpad
       tag: stg-724a722
     ingress:
+      className: ingress-nginx-etherpad-stage
       hosts:
       - host: pad.allizom.org
         paths:

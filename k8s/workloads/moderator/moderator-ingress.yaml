@@ -11,14 +11,18 @@ spec:
   chart:
     repository: https://kubernetes.github.io/ingress-nginx
     name: ingress-nginx
-    version: "3.33.0"
+    version: "4.2.0"
   values:
     controller:
-      useIngressClassOnly: true
+      ingressClassResource:
+        name: ingress-nginx-moderator-stage
+        enabled: true
+        default: false
+        controllerValue: "k8s.io/ingress-nginx-moderator-stage"
       enableCustomResources: false
       autoscaling:
         enabled: true
-        minReplicas: 1
+        minReplicas: 2
         maxReplicas: 4
         targetCPUUtilizationPercentage: 80
         targetMemoryUtilizationPercentage: 80
