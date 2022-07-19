@@ -11,10 +11,14 @@ spec:
   chart:
     repository: https://kubernetes.github.io/ingress-nginx
     name: ingress-nginx
-    version: "3.33.0"
+    version: "4.2.0"
   values:
     controller:
-      useIngressClassOnly: true
+      ingressClassResource:
+        name: ingress-nginx-pastebin-stage
+        enabled: true
+        default: false
+        controllerValue: "k8s.io/ingress-nginx-pastebin-stage"
       enableCustomResources: false
       autoscaling:
         enabled: true
