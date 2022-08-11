@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: mozmoderator
-    version: "0.2.4"
+    version: "0.3.0"
   values:
     configMap:
       data:
@@ -37,27 +37,34 @@ spec:
       enabled: true
       name: moderator
       secrets:
-      - key: /stage/moderator/envvar
-        name: AWS_ACCESS_KEY_ID
-        property: AWS_ACCESS_KEY_ID
-      - key: /stage/moderator/envvar
-        name: AWS_SECRET_ACCESS_KEY
-        property: AWS_SECRET_ACCESS_KEY
-      - key: /stage/moderator/envvar
-        name: DATABASE_URL
-        property: DATABASE_URL
-      - key: /stage/moderator/envvar
-        name: OIDC_RP_CLIENT_ID
-        property: OIDC_RP_CLIENT_ID
-      - key: /stage/moderator/envvar
-        name: OIDC_RP_CLIENT_SECRET
-        property: OIDC_RP_CLIENT_SECRET
-      - key: /stage/moderator/envvar
-        name: SECRET_KEY
-        property: SECRET_KEY
-      - key: /stage/moderator/envvar
-        name: SENTRY_DSN
-        property: SENTRY_DSN
+      - remoteRef:
+          key: /stage/moderator/envvar
+          property: AWS_ACCESS_KEY_ID
+        secretKey: AWS_ACCESS_KEY_ID
+      - remoteRef:
+          property: AWS_SECRET_ACCESS_KEY
+          key: /stage/moderator/envvar
+        secretKey: AWS_SECRET_ACCESS_KEY
+      - remoteRef:
+          key: /stage/moderator/envvar
+          property: DATABASE_URL
+        secretKey: DATABASE_URL
+      - remoteRef:
+          key: /stage/moderator/envvar
+          property: OIDC_RP_CLIENT_ID
+        secretKey: OIDC_RP_CLIENT_ID
+      - remoteRef:
+          key: /stage/moderator/envvar
+          property: OIDC_RP_CLIENT_SECRET
+        secretKey: OIDC_RP_CLIENT_SECRET
+      - remoteRef:
+          key: /stage/moderator/envvar
+          property: SECRET_KEY
+        secretKey: SECRET_KEY
+      - remoteRef:
+          key: /stage/moderator/envvar
+          property: SENTRY_DSN
+        secretKey: SENTRY_DSN
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
