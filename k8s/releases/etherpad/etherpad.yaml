@@ -14,34 +14,41 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: etherpad
-    version: "1.0.3"
+    version: "2.0.0"
   values:
     configMap:
       data: {}
     externalSecrets:
       enabled: true
       secrets:
-      - key: /stage/etherpad/envvar
-        name: ADMIN_PASSWORD
-        property: ADMIN_PASSWORD
-      - key: /stage/etherpad/envvar
-        name: DB_HOST
-        property: DB_HOST
-      - key: /stage/etherpad/envvar
-        name: DB_NAME
-        property: DB_NAME
-      - key: /stage/etherpad/envvar
-        name: DB_PASS
-        property: DB_PASS
-      - key: /stage/etherpad/envvar
-        name: DB_USER
-        property: DB_USER
-      - key: /stage/etherpad/envvar
-        name: ETHERPAD_API_KEY
-        property: ETHERPAD_API_KEY
-      - key: /stage/etherpad/envvar
-        name: ETHERPAD_SESSION_KEY
-        property: ETHERPAD_SESSION_KEY
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: ADMIN_PASSWORD
+        secretKey: ADMIN_PASSWORD
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: DB_HOST
+        secretKey: DB_HOST
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: DB_NAME
+        secretKey: DB_NAME
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: DB_PASS
+        secretKey: DB_PASS
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: DB_USER
+        secretKey: DB_USER
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: ETHERPAD_API_KEY
+        secretKey: ETHERPAD_API_KEY
+      - remoteRef:
+          key: /stage/etherpad/envvar
+          property: ETHERPAD_SESSION_KEY
+        secretKey: ETHERPAD_SESSION_KEY
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/etherpad
