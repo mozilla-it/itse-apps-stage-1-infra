@@ -14,7 +14,7 @@ spec:
   chart:
     repository: https://mozilla-it.github.io/helm-charts/
     name: pastebin
-    version: "0.1.5"
+    version: "0.2.1"
   values:
     configMap:
       data:
@@ -28,21 +28,26 @@ spec:
       enabled: true
       name: pastebin
       secrets:
-      - key: /stage/pastebin/envvar
-        name: DB_HOST
-        property: database_host
-      - key: /stage/pastebin/envvar
-        name: DB_NAME
-        property: database_name
-      - key: /stage/pastebin/envvar
-        name: DB_PASS
-        property: database_password
-      - key: /stage/pastebin/envvar
-        name: DB_USER
-        property: database_user
-      - key: /stage/pastebin/envvar
-        name: SESSION_KEY
-        property: session_key
+      - remoteRef:
+          key: /stage/pastebin/envvar
+          property: database_host
+        secretKey: DB_HOST
+      - remoteRef:
+          key: /stage/pastebin/envvar
+          property: database_name
+        secretKey: DB_NAME
+      - remoteRef:
+          key: /stage/pastebin/envvar
+          property: database_password
+        secretKey: DB_PASS
+      - remoteRef:
+          key: /stage/pastebin/envvar
+          property: database_user
+        secretKey: DB_USER
+      - remoteRef:
+          key: /stage/pastebin/envvar
+          property: session_key
+        secretKey: SESSION_KEY
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/pastebin
