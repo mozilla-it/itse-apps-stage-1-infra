@@ -1,5 +1,5 @@
 locals {
-  cert_manager_version      = "v1.0.2"
+  cert_manager_version      = "v1.8.2"
   cert_manager_crd_manifest = "https://github.com/jetstack/cert-manager/releases/download/${local.cert_manager_version}/cert-manager.crds.yaml"
   cert_manager_name_prefix  = "${module.itse-apps-stage-1.cluster_id}-cert-manager"
   cert_manager_namespace    = "cert-manager"
