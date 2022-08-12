@@ -1,14 +1,21 @@
 ---
-apiVersion: kubernetes-client.io/v1
+apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: telegraf-influx
   namespace: telegraf-stage
 spec:
-  backendType: secretsManager
+  dataFrom:
+  - extract:
+      key: /stage/telegraf
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: secretsmanager-secretstore
+  target:
+    name: telegraf-influx
+    template:
+      metadata: {}
   # Format for the secret is a flat k/v, with these keys defined:
   # INFLUX_URL, INFLUX_DB, INFLUX_USER, INFLUX_PW
   # the url should include https:// and a port (usually :8086)
   # the other three values are simple strings, no complex formatting
-  dataFrom:
-    - /stage/telegraf
