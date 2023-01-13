@@ -68,8 +68,8 @@ spec:
         secretKey: SENTRY_DSN
     image:
       pullPolicy: Always
-      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
-      tag: stg-c49289e
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator 
+      tag: stg-c49289e # {"$imagepolicy": "flux-system:moderator:tag"}
     ingress:
       className: ingress-nginx-moderator-stage
       hosts:
