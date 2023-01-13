@@ -1,21 +1,24 @@
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: discourse
-  namespace: discourse-dev
   labels:
     app: discourse
     env: dev
-  annotations:
-    fluxcd.io/automated: "true"
-    filter.fluxcd.io/chart-image: regex:^(dev-[a-f0-9]{4,10})$
+  name: discourse
+  namespace: discourse-dev
 spec:
-  releaseName: discourse-dev
   chart:
-    repository: https://mozilla-it.github.io/helm-charts/
-    name: discourse
-    version: "3.0.5"
+    spec:
+      chart: discourse
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: mozilla-helm-charts
+      version: 3.0.5
+  interval: 1m0s
+  releaseName: discourse-dev
+  targetNamespace: discourse-dev
   values:
     configMap:
       data:
@@ -108,12 +111,12 @@ spec:
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/discourse
       tag: dev-0bb38f7
     ingress:
-      className: ingress-nginx-discourse-dev
       annotations:
         nginx.ingress.kubernetes.io/server-snippet: |
-              location /webhooks/aws {
-                deny all;
-              }
+          location /webhooks/aws {
+            deny all;
+          }
+      className: ingress-nginx-discourse-dev
       hosts:
       - host: discourse.dev.mozit.cloud
         paths:
@@ -137,3 +140,4 @@ spec:
       - hosts:
         - discourse.dev.mozit.cloud
         secretName: cert-discourse-dev-mozit-cloud
+
