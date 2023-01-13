@@ -18,7 +18,7 @@ spec:
         namespace: flux-system
       version: 4.2.0
   interval: 1m0s
-  releaseName: ingress-nginx
+  releaseName: discourse-dev-ingress-nginx
   targetNamespace: discourse-dev
   values:
     controller:
