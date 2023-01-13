@@ -6,6 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   image: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
-  interval: 5m0s
+  interval: 10s
   secretRef:
     name: ecr-credentials
