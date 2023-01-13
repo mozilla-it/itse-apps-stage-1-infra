@@ -13,6 +13,7 @@ spec:
         kind: HelmRepository
         name: mozilla-helm-charts
   interval: 1m0s
+  releaseName: moderator
   targetNamespace: moderator-stage
   values:
     configMap:
