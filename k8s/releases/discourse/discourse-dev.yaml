@@ -15,6 +15,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: mozilla-helm-charts
+        namespace: flux-system
       version: 3.0.5
   interval: 1m0s
   releaseName: discourse-dev
@@ -140,4 +141,3 @@ spec:
       - hosts:
         - discourse.dev.mozit.cloud
         secretName: cert-discourse-dev-mozit-cloud
-
