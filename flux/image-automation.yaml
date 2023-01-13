@@ -1,0 +1,20 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: image-automation
+  namespace: flux-system
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: weave@flux.works
+        name: Weave Flux
+  interval: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+
