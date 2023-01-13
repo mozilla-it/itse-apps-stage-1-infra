@@ -68,7 +68,7 @@ spec:
             #     name: aws-credentials
             env:
             - name: REGION
-              value: us-east-1 # change this if ECR repo is in a different region
+              value: us-west-2
             volumeMounts:
             - mountPath: /token
               name: token
@@ -84,7 +84,7 @@ spec:
             - name: SECRET_NAME
               value: ecr-credentials
             - name: ECR_REGISTRY
-              value: <account id>.dkr.ecr.<region>.amazonaws.com # fill in the account id and region
+              value: 783633885093.dkr.ecr.us-west-2.amazonaws.com # fill in the account id and region
             volumeMounts:
             - mountPath: /token
               name: token
