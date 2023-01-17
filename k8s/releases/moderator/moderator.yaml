@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -68,8 +67,8 @@ spec:
         secretKey: SENTRY_DSN
     image:
       pullPolicy: Always
-      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator 
-      tag: stg-c49289e # {"$imagepolicy": "flux-system:moderator:tag"}
+      repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
+      tag: stg-d4506b3-2023-01-17.165439 # {"$imagepolicy": "flux-system:moderator:tag"}
     ingress:
       className: ingress-nginx-moderator-stage
       hosts:
@@ -95,4 +94,3 @@ spec:
       - hosts:
         - moderator.stage.mozit.cloud
         secretName: cert-moderator-stage-mozit-cloud
-
