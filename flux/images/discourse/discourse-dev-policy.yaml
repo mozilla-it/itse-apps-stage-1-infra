@@ -11,5 +11,5 @@ spec:
   imageRepositoryRef:
     name: discourse
   policy:
-    alphabetical:
+    numerical:
       order: asc
