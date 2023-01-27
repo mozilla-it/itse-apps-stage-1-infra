@@ -1,0 +1,15 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: discourse-dev
+  namespace: flux-system
+spec:
+  filterTags:
+    extract: ""
+    pattern: ^dev-.*$
+  imageRepositoryRef:
+    name: discourse
+  policy:
+    alphabetical:
+      order: asc
