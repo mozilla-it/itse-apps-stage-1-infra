@@ -1,0 +1,12 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: discourse
+  namespace: flux-system
+
+spec:
+  image: 783633885093.dkr.ecr.us-west-2.amazonaws.com/discourse
+  interval: 5m0s
+  secretRef:
+    name: ecr-credentials
