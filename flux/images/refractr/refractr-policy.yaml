@@ -1,0 +1,15 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: moderator
+  namespace: flux-system
+spec:
+  filterTags:
+    extract: $version
+    pattern: ^v(?P<version>\d+\.\d+\.\d+-\d+)-g.*$
+  imageRepositoryRef:
+    name: moderator
+  policy:
+    semver:
+      range: ">=0.0.0-0"
