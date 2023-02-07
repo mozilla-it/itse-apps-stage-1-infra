@@ -4,12 +4,15 @@ kind: ImagePolicy
 metadata:
   name: discourse-dev
   namespace: flux-system
+
 spec:
   filterTags:
-    extract: ""
-    pattern: ^dev-.*$
+    extract: $ts
+    pattern: ^dev-[a-f0-9]{7}-(?P<ts>[0-9]{4}-[0-9]{2}-[0-9]{2}\.[0-9]{6})$
+
   imageRepositoryRef:
     name: discourse
+
   policy:
     alphabetical:
       order: asc
