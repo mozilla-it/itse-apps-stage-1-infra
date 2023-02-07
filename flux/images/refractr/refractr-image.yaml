@@ -4,6 +4,7 @@ kind: ImageRepository
 metadata:
   name: refractr
   namespace: flux-system
+
 spec:
   image: 783633885093.dkr.ecr.us-west-2.amazonaws.com/refractr
   interval: 5m0s
