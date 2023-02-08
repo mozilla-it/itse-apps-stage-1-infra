@@ -1,41 +1,55 @@
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: telegraf
-  namespace: telegraf-stage
   labels:
     app: telegraf
+
+  name: telegraf
+  namespace: telegraf-stage
+
 spec:
-  releaseName: telegraf
   chart:
-    repository: https://helm.influxdata.com/
-    name: telegraf
-    version: "1.8.4"
+    spec:
+      chart: telegraf
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: influxdata
+        namespace: flux-system
+      version: 1.8.4
+
+  interval: 1m0s
+  releaseName: telegraf
   values:
+    config:
+      agent:
+        interval: 300s
+
+      global_tags:
+        cluster: itse-apps-stage-1-infra
+
+      inputs:
+        - x509_cert:
+            sources:
+              - https://www.firefox.com:443
+              - https://www.mozilla.com:443
+
+      outputs:
+        - influxdb:
+            database: ${INFLUX_DB}
+            password: ${INFLUX_PW}
+            skip_database_creation: true
+            timeout: 15s
+            urls:
+              - ${INFLUX_URL}
+
+            username: ${INFLUX_USER}
+
     envFromSecret: telegraf-influx
     image:
       repo: public.ecr.aws/influxdb/telegraf
       tag: 1.16.2-alpine
+
     service:
       enabled: false
-    config:
-      agent:
-        interval: "300s"
-      global_tags:
-        cluster: itse-apps-stage-1-infra
-      inputs:
-        - x509_cert:
-            # TODO: define a url that we can take down/break to do
-            # functional testing of this setup
-            sources:
-              - 'https://www.firefox.com:443'
-              - 'https://www.mozilla.com:443'
-      outputs:
-        - influxdb:
-            skip_database_creation: true
-            urls: ["${INFLUX_URL}"]
-            database: "${INFLUX_DB}"
-            timeout: "15s"
-            username: "${INFLUX_USER}"
-            password: "${INFLUX_PW}"
