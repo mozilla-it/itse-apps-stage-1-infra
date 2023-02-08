@@ -3,8 +3,8 @@ locals {
     "aws_calico"         = true
     "external_secrets"   = true
     "fluentd_papertrail" = false
-    "flux"               = true
-    "flux_helm_operator" = true
+    "flux"               = false
+    "flux_helm_operator" = false
     "prometheus"         = true
     "configmapsecrets"   = true
   }
