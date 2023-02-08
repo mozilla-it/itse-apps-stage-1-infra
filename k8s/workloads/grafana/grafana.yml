@@ -1,45 +1,42 @@
-# This used to be in a helm chart but with every helm chart update
-# of refractr it causes it to create a new release which recreates the load balancer
-# so moving this here to mitigate that
-#
-# NOTE: Decide if we want this in terraform instead, I can see how this should be in terraform
-#       but since its part of the app it should live as a helmrelease
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: grafana
-  namespace: monitoring
   labels:
     app: grafana
+
+  name: grafana
+  namespace: monitoring
+
 spec:
-  releaseName: grafana
   chart:
-    repository: https://grafana.github.io/helm-charts
-    name: grafana
-    version: "5.7.2"
+    spec:
+      chart: grafana
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+
+      version: 5.7.2
+
+  interval: 1m0s
+  releaseName: grafana
   values:
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            url: http://prometheus-server.monitoring
-            access: proxy
-            isDefault: true
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-          - name: 'default'
-            orgId: 1
-            folder: ''
-            type: file
-            disableDeletion: false
+          - disableDeletion: false
             editable: true
+            folder: ""
+            name: default
             options:
               path: /var/lib/grafana/dashboards/default
+
+            orgId: 1
+            type: file
+
     dashboards:
       default:
         refractr:
@@ -635,3 +632,13 @@ spec:
               "uid": "TLoIA75Mz",
               "version": 1
             }
+
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - access: proxy
+            isDefault: true
+            name: Prometheus
+            type: prometheus
+            url: http://prometheus-server.monitoring
