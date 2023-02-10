@@ -7,11 +7,10 @@ metadata:
 
 spec:
   filterTags:
-    extract: $version
-    pattern: ^v(?P<version>\d+\.\d+\.\d+-\d+)-g.*$
+    extract: $tag
+    pattern: ^(?P<tag>v[0-9]+.[0-9]+.[0-9]+-[0-9]+-g[a-f0-9]{7})$
 
   imageRepositoryRef:
-
     name: refractr
 
   policy:
