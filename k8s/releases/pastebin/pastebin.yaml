@@ -1,25 +1,28 @@
 ---
-apiVersion: helm.fluxcd.io/v1
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pastebin
-  namespace: pastebin-stage
   labels:
     app: pastebin
-  annotations:
-    fluxcd.io/automated: "true"
-    filter.fluxcd.io/chart-image: regex:^(stg-[a-f0-9]{7})$
+  name: pastebin
+  namespace: pastebin-stage
 spec:
-  releaseName: pastebin
   chart:
-    repository: https://mozilla-it.github.io/helm-charts/
-    name: pastebin
-    version: "0.2.2"
+    spec:
+      chart: pastebin
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: mozilla-helm-charts
+        namespace: flux-system
+      version: 0.2.2
+  interval: 1m0s
+  releaseName: pastebin
   values:
     configMap:
       data:
         DB_PORT: "3306"
-        DPASTE_BASE_DOMAIN: "paste.allizom.org"
+        DPASTE_BASE_DOMAIN: paste.allizom.org
         VAL: "5"
     deployment:
       port: "8000"
