@@ -24,7 +24,7 @@ spec:
       enabled: true
     image:
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/refractr
-      tag: v0.0.125-2-gb3f6104
+      tag: v0.0.128-2-gb384054
     my_issuer:
       create: true
       dns:
