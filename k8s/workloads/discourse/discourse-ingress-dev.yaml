@@ -16,7 +16,7 @@ spec:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-      version: 4.2.0
+      version: 4.5.2
   interval: 1m0s
   releaseName: discourse-dev-ingress-nginx
   targetNamespace: discourse-dev
@@ -43,6 +43,8 @@ spec:
         use-forwarded-headers: "true"
         use-proxy-protocol: "false"
       enableCustomResources: false
+      watchIngressWithoutClass: true
+      ingressClass: ingress-nginx-discourse-dev
       ingressClassResource:
         controllerValue: k8s.io/ingress-nginx-discourse-dev
         default: false
