@@ -1,6 +1,0 @@
-cost_center   = "1410"
-environment   = "stage"
-project       = "pastebin"
-project_desc  = "paste.allizom.org"
-project_email = "it-sre@mozilla.com"
-region        = "us-west-2"
