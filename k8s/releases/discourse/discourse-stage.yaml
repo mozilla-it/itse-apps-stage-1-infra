@@ -109,7 +109,7 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/discourse
-      tag: stage-50061bb-2023-02-07.211835 # {"$imagepolicy": "flux-system:discourse-stage:tag"}
+      tag: stage-43ee2cd-2023-05-02.125815 # {"$imagepolicy": "flux-system:discourse-stage:tag"}
     ingress:
       annotations:
         nginx.ingress.kubernetes.io/server-snippet: |
