@@ -9,6 +9,7 @@ locals {
       project_desc      = "discourse.mozilla.org"
       project_email     = "it-sre@mozilla.com"
       region            = "us-west-2"
+      psql_instance     = "db.m5.large"
     }
 
     dev = {
