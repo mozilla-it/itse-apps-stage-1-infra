@@ -21,7 +21,8 @@ jobs:
           export TFENV_TF_VERSION=$(cat shared/.terraform-version)
           echo 'Using version: '
           echo $TFENV_TF_VERSION
-          echo '::set-output name=TF_VERSION::$TFENV_TF_VERSION'
+          echo "{TF_VERSION}={$TFENV_TF_VERSION}" >> $GITHUB_OUTPUT
+
         id: tf-version
 
       - name: 'Setup Terraform'
