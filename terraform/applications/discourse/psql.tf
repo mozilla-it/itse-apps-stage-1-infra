@@ -1,18 +1,20 @@
 resource "aws_db_instance" "discourse" {
-  identifier                  = "discourse-${local.workspace.environment}"
-  storage_type                = "gp2"
-  engine                      = "postgres"
-  engine_version              = local.workspace.psql_version
-  instance_class              = local.workspace.psql_instance
-  allocated_storage           = local.workspace.psql_storage_allocated
-  max_allocated_storage       = local.workspace.psql_storage_max
-  multi_az                    = local.workspace.environment == "prod" ? true : false
-  allow_major_version_upgrade = true
-  name                        = "discourse"
-  username                    = "discourse"
-  backup_retention_period     = 15
-  db_subnet_group_name        = aws_db_subnet_group.discourse-db.id
-  vpc_security_group_ids      = [aws_security_group.discourse-db.id]
+  identifier                            = "discourse-${local.workspace.environment}"
+  storage_type                          = "gp3"
+  engine                                = "postgres"
+  engine_version                        = local.workspace.psql_version
+  instance_class                        = local.workspace.psql_instance
+  allocated_storage                     = local.workspace.psql_storage_allocated
+  max_allocated_storage                 = local.workspace.psql_storage_max
+  multi_az                              = local.workspace.environment == "prod" ? true : false
+  allow_major_version_upgrade           = true
+  performance_insights_enabled          = true
+  name                                  = "discourse"
+  username                              = "discourse"
+  backup_retention_period               = 15
+  performance_insights_retention_period = 7
+  db_subnet_group_name                  = aws_db_subnet_group.discourse-db.id
+  vpc_security_group_ids                = [aws_security_group.discourse-db.id]
 }
 
 resource "aws_db_subnet_group" "discourse-db" {
