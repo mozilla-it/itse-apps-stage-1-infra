@@ -9,6 +9,8 @@ locals {
       project_desc      = "discourse.mozilla.org"
       project_email     = "it-sre@mozilla.com"
       region            = "us-west-2"
+      ca_cert_identifier = "rds-ca-rsa4096-g1"
+      apply_immediately = false
     }
 
     dev = {
@@ -22,6 +24,10 @@ locals {
       redis_instance         = "cache.t2.small"
       redis_num_nodes        = 1
       redis_version          = "5.0.4"
+      ca_cert_identifier = "rds-ca-rsa4096-g1"
+      apply_immediately = true
+
+
     }
 
     stage = {
@@ -35,6 +41,8 @@ locals {
       redis_instance         = "cache.t2.small"
       redis_num_nodes        = 1
       redis_version          = "5.0.4"
+      ca_cert_identifier = "rds-ca-rsa4096-g1"
+      apply_immediately = false
     }
   }
 
