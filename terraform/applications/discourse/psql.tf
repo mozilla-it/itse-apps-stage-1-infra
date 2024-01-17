@@ -13,6 +13,8 @@ resource "aws_db_instance" "discourse" {
   backup_retention_period     = 15
   db_subnet_group_name        = aws_db_subnet_group.discourse-db.id
   vpc_security_group_ids      = [aws_security_group.discourse-db.id]
+  apply_immediately           = local.workspace.apply_immediately
+  ca_cert_identifier          = local.workspace.ca_cert_identifier
 }
 
 resource "aws_db_subnet_group" "discourse-db" {
