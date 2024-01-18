@@ -93,7 +93,7 @@ resource "aws_s3_bucket" "incoming_email" {
   lifecycle {
     ignore_changes = [server_side_encryption_configuration]
   }
-  acl    = "private"
+  acl = "private"
 
   lifecycle_rule {
     enabled = true
