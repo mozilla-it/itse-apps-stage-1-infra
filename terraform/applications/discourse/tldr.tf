@@ -102,11 +102,17 @@ resource "aws_iam_role_policy_attachment" "tldr" {
 resource "aws_s3_bucket" "tldr_email" {
   bucket = "discourse-${local.workspace.environment}-tldr-email"
   acl    = "private"
+  lifecycle {
+    ignore_changes = [server_side_encryption_configuration]
+  }
 }
 
 resource "aws_s3_bucket" "tldr_code" {
   bucket = "discourse-${local.workspace.environment}-tldr-code"
   acl    = "private"
+  lifecycle {
+    ignore_changes = [server_side_encryption_configuration]
+  }
 }
 
 resource "aws_s3_bucket_policy" "tldr_emails" {

@@ -114,6 +114,10 @@ data "aws_canonical_user_id" "current_user" {}
 resource "aws_s3_bucket" "cdn_logs" {
   bucket = "discourse-${local.workspace.environment}-cdn-logs-${random_id.cdn_logs.dec}"
 
+  lifecycle {
+    ignore_changes = [server_side_encryption_configuration]
+  }
+
   grant {
     id          = data.aws_canonical_user_id.current_user.id
     permissions = ["FULL_CONTROL"]
