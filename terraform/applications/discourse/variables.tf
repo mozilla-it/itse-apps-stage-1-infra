@@ -20,10 +20,10 @@ locals {
       psql_instance          = "db.t3.micro"
       psql_storage_allocated = 10
       psql_storage_max       = 50
-      psql_version           = "10"
+      psql_version           = "14.7"
       redis_instance         = "cache.t2.small"
       redis_num_nodes        = 1
-      redis_version          = "5.0.4"
+      redis_version          = "5.0.6"
       ca_cert_identifier     = "rds-ca-rsa4096-g1"
       apply_immediately      = true
 
@@ -37,12 +37,12 @@ locals {
       psql_instance          = "db.t3.micro"
       psql_storage_allocated = 10
       psql_storage_max       = 50
-      psql_version           = "10"
+      psql_version           = "14.7"
       redis_instance         = "cache.t2.small"
       redis_num_nodes        = 1
-      redis_version          = "5.0.4"
+      redis_version          = "5.0.6"
       ca_cert_identifier     = "rds-ca-rsa4096-g1"
-      apply_immediately      = false
+      apply_immediately      = true
     }
   }
 
