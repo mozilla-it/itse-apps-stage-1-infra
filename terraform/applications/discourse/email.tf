@@ -90,6 +90,9 @@ resource "aws_route53_record" "txt_dmarc" {
 
 resource "aws_s3_bucket" "incoming_email" {
   bucket = "discourse-${local.workspace.environment}-email-${random_id.bucket.dec}"
+  lifecycle {
+    ignore_changes = [server_side_encryption_configuration]
+  }
   acl    = "private"
 
   lifecycle_rule {
@@ -263,6 +266,9 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 resource "aws_s3_bucket" "email_lambda_code" {
   bucket = "discourse-${local.workspace.environment}-incoming-email-processor"
   acl    = "private"
+  lifecycle {
+    ignore_changes = [server_side_encryption_configuration]
+  }
 }
 
 resource "aws_ssm_parameter" "in_email_api_key" {

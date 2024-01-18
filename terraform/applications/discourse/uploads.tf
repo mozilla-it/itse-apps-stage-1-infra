@@ -7,6 +7,10 @@ resource "aws_s3_bucket" "uploads" {
   bucket = "discourse-${local.workspace.environment}-uploads-${random_id.bucket.dec}"
   acl    = "private"
 
+  lifecycle {
+    ignore_changes = [server_side_encryption_configuration]
+  }
+
   lifecycle_rule {
     id      = "purge_tombstone"
     enabled = true
