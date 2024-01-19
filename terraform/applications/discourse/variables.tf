@@ -25,7 +25,7 @@ locals {
       redis_num_nodes        = 1
       redis_version          = "5.0.6"
       ca_cert_identifier     = "rds-ca-rsa4096-g1"
-      apply_immediately      = true
+      apply_immediately      = false
 
 
     }
@@ -42,7 +42,7 @@ locals {
       redis_num_nodes        = 1
       redis_version          = "5.0.6"
       ca_cert_identifier     = "rds-ca-rsa4096-g1"
-      apply_immediately      = true
+      apply_immediately      = false
     }
   }
 

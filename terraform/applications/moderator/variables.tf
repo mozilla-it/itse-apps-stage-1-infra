@@ -29,7 +29,7 @@ variable "mysql_storage_max" {
 }
 
 variable "mysql_version" {
-  default = "5.6"
+  default = "5.7.42"
   type    = string
 }
 
@@ -51,4 +51,9 @@ variable "project_email" {
 variable "region" {
   default = "us-west-2"
   type    = string
+}
+
+variable "ca_cert_identifier" {
+  default     = "rds-ca-rsa4096-g1"
+  description = "Allows you to modify the underlying RDS certificate"
 }

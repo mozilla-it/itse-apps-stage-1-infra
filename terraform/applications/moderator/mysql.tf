@@ -39,4 +39,5 @@ resource "aws_db_instance" "moderator" {
   db_subnet_group_name        = aws_db_subnet_group.moderator-db.id
   vpc_security_group_ids      = [aws_security_group.moderator-db.id]
   apply_immediately           = true
+  ca_cert_identifier          = var.ca_cert_identifier
 }
