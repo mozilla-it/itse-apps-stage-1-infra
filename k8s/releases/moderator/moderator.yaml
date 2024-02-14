@@ -68,7 +68,7 @@ spec:
     image:
       pullPolicy: Always
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/moderator
-      tag: stg-dd697d6-2024-02-14.125612 # {"$imagepolicy": "flux-system:moderator:tag"}
+      tag: stg-3d2e87a-2024-02-14.133603 # {"$imagepolicy": "flux-system:moderator:tag"}
     ingress:
       className: ingress-nginx-moderator-stage
       hosts:
