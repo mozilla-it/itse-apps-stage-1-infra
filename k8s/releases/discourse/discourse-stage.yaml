@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: mozilla-helm-charts
         namespace: flux-system
-      version: 3.0.6
+      version: 3.0.7
   interval: 1m0s
   releaseName: discourse-stage
   targetNamespace: discourse-stage
@@ -140,3 +140,8 @@ spec:
       - hosts:
         - discourse.stage.mozit.cloud
         secretName: cert-discourse-stage-mozit-cloud
+    cronjobs:
+      sidekiq-clear-dead-jobs:
+        suspend: false
+        schedule: "@weekly"
+        command: ["rails", "runner", "Sidekiq::DeadSet.new.clear"]
