@@ -48,7 +48,7 @@ spec:
         PG_MAJOR: 12
     db:
       migrate:
-        enabled: true
+        enabled: false
     externalSecrets:
       enabled: true
       loggerSecretKey: /stage/discourse/logger
