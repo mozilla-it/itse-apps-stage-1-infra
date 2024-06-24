@@ -23,7 +23,7 @@ spec:
       enabled: true
     image:
       repository: 783633885093.dkr.ecr.us-west-2.amazonaws.com/refractr
-      tag: v0.0.178-2-g86dc805 # {"$imagepolicy": "flux-system:refractr:tag"}
+      tag: v0.0.179-2-g0371c01 # {"$imagepolicy": "flux-system:refractr:tag"}
     my_issuer:
       create: true
       dns:
