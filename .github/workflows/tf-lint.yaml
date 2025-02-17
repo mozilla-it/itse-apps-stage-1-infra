@@ -1,34 +1,47 @@
-name: 'Terraform CI'
+name: Terraform CI
 
 on:
-  - pull_request
-  - push
+  pull_request: {}
+  push:
+    branches: main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  matrixify:
+    name: Matrixify
+    outputs:
+      matrix: ${{ steps.search.outputs.matrix }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'terraform'
 
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v2
-
-      - name: Set repo terraform version
-        run: |
-          export TFENV_TF_VERSION=$(cat shared/.terraform-version)
-          echo 'Using version: '
-          echo $TFENV_TF_VERSION
-          echo '::set-output name=TF_VERSION::$TFENV_TF_VERSION'
-        id: tf-version
-
-      - name: 'Setup Terraform'
-        uses: hashicorp/setup-terraform@v1
+      - name: Install terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: ${{ steps.tf-version.outputs.TF_VERSION }}
+          terraform_wrapper: false
+      - name: Get Changed TF directories
+        id: search
+        uses: mozilla/tf-actions/matrixify@main
+        with:
+          filter_file: "*.tf"
+      - name: Outputs
+        run: echo "${{ steps.search.outputs.matrix }}"
 
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check -recursive
+  terraform-ci:
+    name: TF CI on "${{ matrix.directory }}"
+
+    if: ${{ fromJSON(needs.matrixify.outputs.matrix).include[0] }}
+    needs: matrixify
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.matrixify.outputs.matrix)}}
+
+    steps:
+      - id: terraform-checks
+        name: Terraform Checks
+        uses: mozilla/tf-actions/ci@main
+        with:
+          tfpath: ${{ matrix.directory }}
